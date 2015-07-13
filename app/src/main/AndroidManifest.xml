@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.movienut" >
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- Permission to write to external storage -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        >
+        <activity
+            android:name=".MainActivity"
+            android:label="MovieNut" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".RecommendSimilarMovie"
+            android:label="Click one out of the same title">
+        </activity>
+        <activity
+            android:name=".RecommendMoviesByDirectorAuthor">
+        </activity>
+        <activity
+            android:name=".SearchFeatures">
+        </activity>
+        <activity
+            android:name=".AddWatchedMovies">
+        </activity>
+        <activity
+            android:name=".RecommendMoviesByActor">
+        </activity>
+        <activity
+            android:name=".RecommendMoviesInCollection" >
+        </activity>
+        <activity
+            android:name=".RecommendMoviesByCompany"
+            android:label="Click one out of the same company">
+        </activity>
+        <activity
+            android:name=".DisplayResults"
+            android:label="Movie Result" >
+        </activity>
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
+
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/app_name" >
+        </activity>
+
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
+
+    </application>
+
+</manifest>
