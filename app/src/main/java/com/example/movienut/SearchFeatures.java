@@ -31,7 +31,6 @@ public class SearchFeatures extends Activity implements AdapterView.OnItemSelect
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.recommendationType, android.R.layout.simple_spinner_item);
         spinner1.setAdapter(adapter);
         spinner1.setOnItemSelectedListener(this);
-
     }
 
     public void buttonOnClickFbLogin(View v) throws IOException {
@@ -47,9 +46,7 @@ public class SearchFeatures extends Activity implements AdapterView.OnItemSelect
             if (searchKeyword == null || searchKeyword.equals("")) {
                 throw new NullPointerException();
             } else {
-
                 Intent intent = null;
-
                 if (selectedType.contains("Actors")) {
                     intent = new Intent(this, RecommendMoviesByActor.class);
 
