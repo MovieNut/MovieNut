@@ -35,7 +35,8 @@ public class SearchFeatures extends Activity implements AdapterView.OnItemSelect
     }
 
     public void buttonOnClickFbLogin(View v) throws IOException {
-
+        Intent intent = new  Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     public void buttonOnClick(View v) throws IOException {
