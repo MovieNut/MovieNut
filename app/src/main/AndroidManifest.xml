@@ -36,6 +36,10 @@
             android:name=".AddWatchedMovies">
         </activity>
         <activity
+            android:name=".RecommendMovieByGenre"
+            android:label="Click one genre type">
+        </activity>
+        <activity
             android:name=".RecommendMoviesByActor">
         </activity>
         <activity
