@@ -38,25 +38,37 @@ public class AddWatchedMovies extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_watched_movies);
 
+        addWatchMoviesFromFb();
+    }
+
+    private void addWatchMoviesFromFb() {
         Map<String, Boolean> map = Storage.loadMap(getApplicationContext());
 
         ArrayList<Movies> watchedMovieList = (ArrayList<Movies>)getIntent().getSerializableExtra("watchedMovies");
 
         if(watchedMovieList != null) {
             for (int i = 0; i < watchedMovieList.size(); i++) {
-                TmdbApi accountApi = new TmdbApi("3f2950a48b75db414b1dbb148cfcad89");
-                TmdbSearch searchResult = accountApi.getSearch();
-                list = searchResult.searchMovie(watchedMovieList.get(i).getMovieTitle(), null, "", false, null).getResults();
-                for (int j = 0; j < list.size(); j++) {
-                    if (watchedMovieList.get(i).getDate().equals(list.get(i).getReleaseDate())) {
-                        map.put(String.valueOf(list.get(i).getId()), true);
-                        break;
-                    }
-                }
+                searchMovieByTitle(watchedMovieList, i);
+                addIdToMap(map, watchedMovieList, i);
             }
         }
 
         Storage.saveMap(map, getApplicationContext());
+    }
+
+    private void addIdToMap(Map<String, Boolean> map, ArrayList<Movies> watchedMovieList, int i) {
+        for (int j = 0; j < list.size(); j++) {
+            if (watchedMovieList.get(i).getDate().equals(list.get(i).getReleaseDate())) {
+                map.put(String.valueOf(list.get(i).getId()), true);
+                break;
+            }
+        }
+    }
+
+    private void searchMovieByTitle(ArrayList<Movies> watchedMovieList, int i) {
+        TmdbApi accountApi = new TmdbApi("3f2950a48b75db414b1dbb148cfcad89");
+        TmdbSearch searchResult = accountApi.getSearch();
+        list = searchResult.searchMovie(watchedMovieList.get(i).getMovieTitle(), null, "", false, null).getResults();
     }
 
     public void buttonOnClick1(View v) throws IOException {
@@ -97,12 +109,7 @@ public class AddWatchedMovies extends Activity {
             } else {
                 String[] moviesName = new String[list.size()];
                 String[] description = new String[list.size()];
-                for (int i = 0; i < list.size(); i++) {
-                    String releaseDate;
-                    releaseDate = getReleaseDate(i);
-                    moviesName[i] = list.get(i).getOriginalTitle() + "(" + releaseDate + ")";
-                    description[i] = list.get(i).getOverview();
-                }
+                getMovieInfo(moviesName, description);
 
                 ListView moviesList = (ListView) findViewById(R.id.listView3);
                 moviesAdapter adapter = new moviesAdapter(this, moviesName, description);
@@ -113,6 +120,15 @@ public class AddWatchedMovies extends Activity {
             }
         } catch (NullPointerException e) {
             Toast.makeText(this, "Movies entered are not found!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void getMovieInfo(String[] moviesName, String[] description) {
+        for (int i = 0; i < list.size(); i++) {
+            String releaseDate;
+            releaseDate = getReleaseDate(i);
+            moviesName[i] = list.get(i).getOriginalTitle() + "(" + releaseDate + ")";
+            description[i] = list.get(i).getOverview();
         }
     }
 
