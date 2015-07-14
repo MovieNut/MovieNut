@@ -2,6 +2,7 @@ package com.example.movienut;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
@@ -41,14 +42,16 @@ public class AddWatchedMovies extends Activity {
 
         ArrayList<Movies> watchedMovieList = (ArrayList<Movies>)getIntent().getSerializableExtra("watchedMovies");
 
-        for(int i = 0; i < watchedMovieList.size(); i++) {
-            TmdbApi accountApi = new TmdbApi("3f2950a48b75db414b1dbb148cfcad89");
-            TmdbSearch searchResult = accountApi.getSearch();
-            list = searchResult.searchMovie(watchedMovieList.get(i).getMovieTitle(), null, "", false, null).getResults();
-            for (int j = 0; j < list.size(); j++) {
-                if (watchedMovieList.get(i).getDate().equals(list.get(i).getReleaseDate())) {
-                    map.put(String.valueOf(list.get(i).getId()), true);
-                    break;
+        if(watchedMovieList != null) {
+            for (int i = 0; i < watchedMovieList.size(); i++) {
+                TmdbApi accountApi = new TmdbApi("3f2950a48b75db414b1dbb148cfcad89");
+                TmdbSearch searchResult = accountApi.getSearch();
+                list = searchResult.searchMovie(watchedMovieList.get(i).getMovieTitle(), null, "", false, null).getResults();
+                for (int j = 0; j < list.size(); j++) {
+                    if (watchedMovieList.get(i).getDate().equals(list.get(i).getReleaseDate())) {
+                        map.put(String.valueOf(list.get(i).getId()), true);
+                        break;
+                    }
                 }
             }
         }
@@ -93,12 +96,16 @@ public class AddWatchedMovies extends Activity {
                 throw new NullPointerException();
             } else {
                 String[] moviesName = new String[list.size()];
+                String[] description = new String[list.size()];
                 for (int i = 0; i < list.size(); i++) {
-                    moviesName[i] = list.get(i).getOriginalTitle() + "\n" + list.get(i).getOverview();
+                    String releaseDate;
+                    releaseDate = getReleaseDate(i);
+                    moviesName[i] = list.get(i).getOriginalTitle() + "(" + releaseDate + ")";
+                    description[i] = list.get(i).getOverview();
                 }
 
                 ListView moviesList = (ListView) findViewById(R.id.listView3);
-                moviesAdapter adapter = new moviesAdapter(this, moviesName);
+                moviesAdapter adapter = new moviesAdapter(this, moviesName, description);
                 moviesList.setAdapter(adapter);
 
                 selectOneMovie(moviesList);
@@ -107,6 +114,16 @@ public class AddWatchedMovies extends Activity {
         } catch (NullPointerException e) {
             Toast.makeText(this, "Movies entered are not found!", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private String getReleaseDate(int i) {
+        String releaseDate;
+        if(list.get(i).getReleaseDate() != null){
+            releaseDate = list.get(i).getReleaseDate().substring(0, 4);
+        } else {
+            releaseDate = "";
+        }
+        return releaseDate;
     }
 
     private void permitsNetwork() {
@@ -139,11 +156,14 @@ public class AddWatchedMovies extends Activity {
     class moviesAdapter extends ArrayAdapter<String> {
         Context context;
         String[] list;
+        String[] description;
+        private int[] colors = new int[] { Color.parseColor("#fffff1d6"), Color.parseColor("#D2E4FC") };
 
-        moviesAdapter(Context c, String[] list) {
+        moviesAdapter(Context c, String[] list, String[] description) {
             super(c, R.layout.selection_row, R.id.textView, list);
             this.context = c;
             this.list = list;
+            this.description = description;
         }
 
         @Override
@@ -152,9 +172,14 @@ public class AddWatchedMovies extends Activity {
 
             View row = inflater.inflate(R.layout.selection_row, parent, false);
             TextView name = (TextView) row.findViewById(R.id.textView);
+            TextView descriptionOut = (TextView) row.findViewById(R.id.textView2);
+            descriptionOut.setVisibility(View.VISIBLE);
 
+            int colorPos = position % colors.length;
+            row.setBackgroundColor(colors[colorPos]);
+
+            descriptionOut.setText(description[position]);
             name.setText(list[position]);
-
             return row;
         }
 

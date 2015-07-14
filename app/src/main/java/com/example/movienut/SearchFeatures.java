@@ -2,6 +2,7 @@ package com.example.movienut;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -28,10 +29,9 @@ public class SearchFeatures extends Activity implements AdapterView.OnItemSelect
         setContentView(R.layout.activity_search_features);
 
         Spinner spinner1 = (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.recommendationType, android.R.layout.simple_spinner_item);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.recommendationType, android.R.layout.simple_spinner_dropdown_item);
         spinner1.setAdapter(adapter);
         spinner1.setOnItemSelectedListener(this);
-
     }
 
     public void buttonOnClickFbLogin(View v) throws IOException {
@@ -47,9 +47,7 @@ public class SearchFeatures extends Activity implements AdapterView.OnItemSelect
             if (searchKeyword == null || searchKeyword.equals("")) {
                 throw new NullPointerException();
             } else {
-
                 Intent intent = null;
-
                 if (selectedType.contains("Actors")) {
                     intent = new Intent(this, RecommendMoviesByActor.class);
 
