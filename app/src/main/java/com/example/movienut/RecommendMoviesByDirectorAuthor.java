@@ -40,35 +40,38 @@ public class RecommendMoviesByDirectorAuthor extends Activity {
     private Menu menu;
 
     @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-      //  setContentView(R.layout.activity_recommend_movie_by_people);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //  setContentView(R.layout.activity_selection_of_similar_name);
 
         String searchKeyWord = getSearchKeyword();
 
-            permitsNetwork();
+        permitsNetwork();
 
-            TmdbApi accountApi = new TmdbApi("3f2950a48b75db414b1dbb148cfcad89");
+        TmdbApi accountApi = new TmdbApi("3f2950a48b75db414b1dbb148cfcad89");
 
-            TmdbSearch searchResult = accountApi.getSearch();
-            List<Person> list = searchResult.searchPerson(searchKeyWord, false, null).getResults();
-/*
-        peopleName = new String[list.size()];
-        for(int i = 0; i < list.size(); i++){
-            peopleName[i] = list.get(i).getName();
-        }
+        TmdbSearch searchResult = accountApi.getSearch();
+        List<Person> list = searchResult.searchPerson(searchKeyWord, false, null).getResults();
 
-        ListView peopleNameList = (ListView) findViewById(R.id.listView2);
-        moviesAdapter adapter = new moviesAdapter(this, peopleName);
-        peopleNameList.setAdapter(adapter);
-
-*/
-        getId(list);
-
-            if (id == -1) {
-                returnHomePage();
+        try {
+            if(list == null || list.size() <= 0){
+                throw new NullPointerException();
             } else {
-                getMoviesInString(accountApi);
+                getId(list);
+                searchDirectorOrAuthor(accountApi);
+            }
+        } catch (NullPointerException e) {
+            returnHomePage();
+        }
+    }
+
+    private void searchDirectorOrAuthor(TmdbApi accountApi) {
+        try {
+            List<PersonCredit> result = accountApi.getPeople().getPersonCredits(id).getCrew();
+            if (result == null || result.size() <= 0) {
+                throw new NullPointerException();
+            } else {
+                getMoviesInString(accountApi, result);
 
                 Intent displyResults = new Intent(this, DisplayResults.class);
                 displyResults.putExtra("movieInfo", moviesInfo);
@@ -77,54 +80,23 @@ public class RecommendMoviesByDirectorAuthor extends Activity {
                 displyResults.putExtra("releaseDate", releaseDates);
                 startActivity(displyResults);
 
-               finish();
+                finish();
             }
+        } catch (NullPointerException e) {
+            returnHomePage();
         }
-
-        private void returnHomePage() {
-            Intent returnHome = new Intent(this, MainActivity.class);
-            startActivity(returnHome);
-            this.finish();
-            Toast.makeText(getApplicationContext(), "Movies or peoples could not be found!", Toast.LENGTH_LONG).show();
-        }
-
-        private void getMoviesInString(TmdbApi accountApi) {
-
-            List<PersonCredit> result = accountApi.getPeople().getPersonCredits(id).getCrew();
-            getSelectedInfo(accountApi, result);
-
-        }
+    }
 
 
-    class moviesAdapter extends ArrayAdapter<String> {
-        Context context;
-        String[] list;
+    private void returnHomePage() {
+        Intent returnHome = new Intent(this, MainActivity.class);
+        startActivity(returnHome);
+        this.finish();
+        Toast.makeText(getApplicationContext(), "Director or author could not be found!", Toast.LENGTH_LONG).show();
+    }
 
-        moviesAdapter(Context c, String[] list) {
-            super(c, R.layout.selection_row, R.id.textView,list);
-            this.context = c;
-            this.list = list;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent){
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            View row = inflater.inflate(R.layout.selection_row, parent, false);
-            TextView name = (TextView) row.findViewById(R.id.textView);
-/*
-            peopleName.setOnClickListener(new View.OnClickListener() {
-                public void onItemClick(AdapterView<?> parent, View view,
-                                        int position, long id) {
-                   positionInList = position;
-                }
-            });
-*/
-            name.setText(list[position]);
-
-            return row;
-        }
-
+    private void getMoviesInString(TmdbApi accountApi, List<PersonCredit> result) {
+        getSelectedInfo(accountApi, result);
 
     }
 
@@ -132,33 +104,18 @@ public class RecommendMoviesByDirectorAuthor extends Activity {
         String releaseDate;
         String movieTitle;
         MovieDb movie;
-        if(Utils.createImageUrl(accountApi, accountApi.getPeople().getPersonInfo(id).getProfilePath(), "original") != null) {
-            image = Utils.createImageUrl(accountApi, accountApi.getPeople().getPersonInfo(id).getProfilePath(), "original").toString() + "\n";
-        } else {
-            image = " " + "\n";
-        }
-        if(accountApi.getPeople().getPersonInfo(id).getBiography() != null){
-            description = accountApi.getPeople().getPersonInfo(id).getBiography();
-            description = description.replaceAll("\\n", " ");
-            description = description + "\n";
-        } else {
-            description = "" + "\n";
-        }
+        getPeoplePhoto(accountApi);
+        getBiolography(accountApi);
 
         releaseDates = new String[result.size() + 1];
         releaseDates[0] = "";
 
         for (int i = 0; i < result.size(); i++) {
+            //if(map.get)
             releaseDate = result.get(i).getReleaseDate();
             movieTitle = result.get(i).getMovieOriginalTitle();
 
-            if (releaseDate == null) {
-                releaseDate = "unknown";
-                releaseDates[i + 1] = "";
-            } else {
-                releaseDate = releaseDate.substring(0, 4);
-                releaseDates[i + 1] = releaseDate;
-            }
+            releaseDate = getReleaseDates(releaseDate, i);
 
             displayMovies = displayMovies + movieTitle +
                     "(" + releaseDate + ")" + "Position as " + result.get(i).getJob() + "\n";
@@ -167,17 +124,9 @@ public class RecommendMoviesByDirectorAuthor extends Activity {
 
             movie = accountApi.getMovies().getMovie(result.get(i).getId(), "");
 
-            if (movie.getOverview() == null || movie.getOverview().equals("")) {
-                description = description + "NO DESCRIPTION YET" + "\n";
-            } else {
-                description = description + movie.getOverview() + "\n";
-            }
+            addDescription(movie);
 
-            if (Utils.createImageUrl(accountApi, result.get(i).getPosterPath(), "original") != null) {
-                image = image + Utils.createImageUrl(accountApi, result.get(i).getPosterPath(), "original").toString() + "\n";
-            } else {
-                image = image + " " + "\n";
-            }
+            addImageUrl(accountApi, result, i);
         }
 
         moviesInfo = displayMovies.split("\\r?\\n");
@@ -185,34 +134,79 @@ public class RecommendMoviesByDirectorAuthor extends Activity {
         listOfImage = image.split("\\r?\\n");
     }
 
+    private void getBiolography(TmdbApi accountApi) {
+        if(accountApi.getPeople().getPersonInfo(id).getBiography() != null){
+            description = accountApi.getPeople().getPersonInfo(id).getBiography();
+            description = description.replaceAll("\\n", " ");
+            description = description + "\n";
+        } else {
+            description = "" + "\n";
+        }
+    }
+
+    private void getPeoplePhoto(TmdbApi accountApi) {
+        if(Utils.createImageUrl(accountApi, accountApi.getPeople().getPersonInfo(id).getProfilePath(), "original") != null) {
+            image = Utils.createImageUrl(accountApi, accountApi.getPeople().getPersonInfo(id).getProfilePath(), "original").toString() + "\n";
+        } else {
+            image = " " + "\n";
+        }
+    }
+
+    private void addImageUrl(TmdbApi accountApi, List<PersonCredit> result, int i) {
+        if (Utils.createImageUrl(accountApi, result.get(i).getPosterPath(), "original") != null) {
+            image = image + Utils.createImageUrl(accountApi, result.get(i).getPosterPath(), "original").toString() + "\n";
+        } else {
+            image = image + " " + "\n";
+        }
+    }
+
+    private void addDescription(MovieDb movie) {
+        if (movie.getOverview() == null || movie.getOverview().equals("")) {
+            description = description + "NO DESCRIPTION YET" + "\n";
+        } else {
+            description = description + movie.getOverview() + "\n";
+        }
+    }
+
+    private String getReleaseDates(String releaseDate, int i) {
+        if (releaseDate == null) {
+            releaseDate = "unknown";
+            releaseDates[i + 1] = "";
+        } else {
+            releaseDate = releaseDate.substring(0, 4);
+            releaseDates[i + 1] = releaseDate;
+        }
+        return releaseDate;
+    }
+
 
     private void getId(List<Person> list) {
-            if (list.size() <= 0) {
-                id = -1;
-            } else {
-                displayMovies = list.get(0).getName() + "\n" + displayMovies;
-                id = list.get(0).getId();
-            }
+        if (list.size() <= 0) {
+            id = -1;
+        } else {
+            displayMovies = list.get(0).getName() + "\n" + displayMovies;
+            id = list.get(0).getId();
         }
+    }
 
-        private String getSearchKeyword() {
-            Intent intent = getIntent();
-            return intent.getStringExtra("searchKeyWord");
+    private String getSearchKeyword() {
+        Intent intent = getIntent();
+        return intent.getStringExtra("searchKeyWord");
+    }
+
+    private void permitsNetwork() {
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
         }
+    }
 
-        private void permitsNetwork() {
-            if (android.os.Build.VERSION.SDK_INT > 9) {
-                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                StrictMode.setThreadPolicy(policy);
-            }
-        }
-
-@Override
-public boolean onCreateOptionsMenu(Menu menu) {
-    // Inflate the menu; this adds items to the action bar if it is present.
-    getMenuInflater().inflate(R.menu.menu_recommend_movie_by_people, menu);
-    return true;
-}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_recommend_movie_by_people, menu);
+        return true;
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
