@@ -4,7 +4,9 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TabHost;
-
+/**
+ * Created by WeiLin on 4/7/15.
+ */
 
 public class MainActivity extends TabActivity {
 

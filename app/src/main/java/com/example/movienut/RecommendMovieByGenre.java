@@ -67,6 +67,7 @@ public class RecommendMovieByGenre extends Activity {
         for(int i = 0; i < genreList.size(); i++){
             if(genre.equals(genreList.get(i).getName().toLowerCase())) {
                 displayMoviesBasedOnGenre(genreList.get(i).getId());
+                break;
             }
         }
     }
