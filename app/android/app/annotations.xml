@@ -1,0 +1,6 @@
+<root>
+  <item name='android.app.Activity android.view.Window getWindow()'>
+    <annotation name='java.lang.annotation.Deprecated' />
+    <annotation name='org.jetbrains.annotations.Nullable' />
+  </item>
+</root>

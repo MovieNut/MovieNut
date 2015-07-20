@@ -51,33 +51,47 @@ public class RecommendMovieByGenre extends Activity {
 
 
         if(searchKeyWord.equals("UserAccess")) {
-            genreList = accountApi.getGenre().getGenreList("");
-
-            //name: action, adventure, animation, comedy, crime, documentry, drama, family, fantasy, foreign, history, horror
-            //,music, mystery, romance, science fiction, tv movie, thriller, war, western.
-            String[] genreType = new String[genreList.size()];
-            for (int i = 0; i < genreList.size(); i++) {
-                genreType[i] = genreList.get(i).getName();
-            }
-
-            ListView genreTypeList = (ListView) findViewById(R.id.listView2);
-            moviesAdapter adapter = new moviesAdapter(this, genreType);
-            genreTypeList.setAdapter(adapter);
-
-            selectOneMovie(genreTypeList);
+            userAccessRecommendGenre();
 
         } else {
-            Intent intent = getIntent();
-            String genre = intent.getStringExtra("genre").toLowerCase();
-            genreList = accountApi.getGenre().getGenreList("");
-
-            for(int i = 0; i < genreList.size(); i++){
-                if(genre.equals(genreList.get(i).getName().toLowerCase())) {
-                    displayMoviesBasedOnGenre(genreList.get(i).getId());
-                }
-            }
+            adminAccessRecommendByGenre();
 
         }
+    }
+
+    private void adminAccessRecommendByGenre() {
+        Intent intent = getIntent();
+        String genre = intent.getStringExtra("genre").toLowerCase();
+        genreList = accountApi.getGenre().getGenreList("");
+
+        for(int i = 0; i < genreList.size(); i++){
+            if(genre.equals(genreList.get(i).getName().toLowerCase())) {
+                displayMoviesBasedOnGenre(genreList.get(i).getId());
+                break;
+            }
+        }
+    }
+
+    private void userAccessRecommendGenre() {
+        genreList = accountApi.getGenre().getGenreList("");
+
+        //name: action, adventure, animation, comedy, crime, documentry, drama, family, fantasy, foreign, history, horror
+        //,music, mystery, romance, science fiction, tv movie, thriller, war, western.
+        String[] genreType = getGenreList();
+
+        ListView genreTypeList = (ListView) findViewById(R.id.listView2);
+        moviesAdapter adapter = new moviesAdapter(this, genreType);
+        genreTypeList.setAdapter(adapter);
+
+        selectOneMovie(genreTypeList);
+    }
+
+    private String[] getGenreList() {
+        String[] genreType = new String[genreList.size()];
+        for (int i = 0; i < genreList.size(); i++) {
+            genreType[i] = genreList.get(i).getName();
+        }
+        return genreType;
     }
 
     private void selectOneMovie(ListView genreTypeList) {
