@@ -24,7 +24,7 @@ public class SearchFeatures extends Activity implements AdapterView.OnItemSelect
     private String selectedType;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_features);
 

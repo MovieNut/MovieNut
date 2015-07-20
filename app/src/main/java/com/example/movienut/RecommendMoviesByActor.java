@@ -49,31 +49,35 @@ public class RecommendMoviesByActor extends Activity {
             } else {
                 getId(list);
 
-                try {
-                    List<PersonCredit> result = accountApi.getPeople().getPersonCredits(id).getCast();
-
-                    if (result == null || result.size() <= 0) {
-                        throw new NullPointerException();
-                    } else {
-                        getMoviesInString(accountApi, result);
-
-                        Intent displyResults = new Intent(this, DisplayResults.class);
-                        displyResults.putExtra("movieInfo", moviesInfo);
-                        displyResults.putExtra("description", listOfDescription);
-                        displyResults.putExtra("image", listOfImage);
-                        displyResults.putExtra("releaseDate", releaseDates);
-                        startActivity(displyResults);
-
-                        finish();
-                    }
-                } catch (NullPointerException e){
-                    returnHomePage();
-                }
+                getListOfMovie(accountApi);
             }
         } catch (NullPointerException e) {
             returnHomePage();
         }
 
+    }
+
+    private void getListOfMovie(TmdbApi accountApi) {
+        try {
+            List<PersonCredit> result = accountApi.getPeople().getPersonCredits(id).getCast();
+
+            if (result == null || result.size() <= 0) {
+                throw new NullPointerException();
+            } else {
+                getMoviesInString(accountApi, result);
+
+                Intent displyResults = new Intent(this, DisplayResults.class);
+                displyResults.putExtra("movieInfo", moviesInfo);
+                displyResults.putExtra("description", listOfDescription);
+                displyResults.putExtra("image", listOfImage);
+                displyResults.putExtra("releaseDate", releaseDates);
+                startActivity(displyResults);
+
+                finish();
+            }
+        } catch (NullPointerException e){
+            returnHomePage();
+        }
     }
 
 
@@ -102,32 +106,40 @@ public class RecommendMoviesByActor extends Activity {
 
         for (int i = 0; i < result.size(); i++) {
 
-            if (map.get(String.valueOf(result.get(i).getId())) == null) {
-                releaseDate = result.get(i).getReleaseDate();
-                movieTitle = result.get(i).getMovieOriginalTitle();
-
-                character = getCharacter(result, i);
-
-                releaseDate = addReleaseDates(releaseDate, i);
-
-                displayMovies = displayMovies + movieTitle +
-                        "(" + releaseDate + ")" + " act as "
-                        + character + "\n";
-
-                assert result.get(i).getId() <= 0 : "null id";
-
-                movie = accountApi.getMovies().getMovie(result.get(i).getId(), "");
-
-                addDescription(movie);
-
-                getImageUrl(accountApi, result, i);
-            }
+            getMovieInfo(accountApi, result, map, i);
         }
 
         moviesInfo = displayMovies.split("\\r?\\n");
         listOfDescription = description.split("\\r?\\n");
         listOfImage = image.split("\\r?\\n");
 
+    }
+
+    private void getMovieInfo(TmdbApi accountApi, List<PersonCredit> result, Map<String, Boolean> map, int i) {
+        String releaseDate;
+        String movieTitle;
+        String character;
+        MovieDb movie;
+        if (map.get(String.valueOf(result.get(i).getId())) == null) {
+            releaseDate = result.get(i).getReleaseDate();
+            movieTitle = result.get(i).getMovieOriginalTitle();
+
+            character = getCharacter(result, i);
+
+            releaseDate = addReleaseDates(releaseDate, i);
+
+            displayMovies = displayMovies + movieTitle +
+                    "(" + releaseDate + ")" + " act as "
+                    + character + "\n";
+
+            assert result.get(i).getId() <= 0 : "null id";
+
+            movie = accountApi.getMovies().getMovie(result.get(i).getId(), "");
+
+            addDescription(movie);
+
+            getImageUrl(accountApi, result, i);
+        }
     }
 
     private void getImageUrl(TmdbApi accountApi, List<PersonCredit> result, int i) {
