@@ -27,24 +27,22 @@ import info.movito.themoviedbapi.model.people.PersonCredit;
  * Created by WeiLin on 29/6/15.
  */
 public class RecommendMoviesByDirectorAuthor extends Activity {
-
-        int id, positionInList;
-        String displayMovies = "";
-        String description;
-        String image = "";
-        String[] listOfImage;
-        String[] listOfDescription;
-        String[] moviesInfo;
+    int id;
+    String displayMovies = "";
+    String description;
+    public String searchKeyWord;
+    String image = "";
+    public String[] listOfImage;
+    public String[] listOfDescription;
+    public String[] moviesInfo;
     String[] releaseDates;
-    String[] peopleName;
-    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //  setContentView(R.layout.activity_selection_of_similar_name);
 
-        String searchKeyWord = getSearchKeyword();
+        searchKeyWord = getSearchKeyword();
 
         permitsNetwork();
 

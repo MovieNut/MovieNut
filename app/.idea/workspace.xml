@@ -5,6 +5,9 @@
       <config />
     </shared>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="6543b688-4884-4820-8cb5-001af6121d02" name="Default" comment="" />
     <ignored path="app.iws" />
@@ -73,8 +76,8 @@
       <file leaf-file-name="SearchFeaturetest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/tests/SearchFeaturetest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="35" column="88" selection-start-line="35" selection-start-column="31" selection-end-line="35" selection-end-column="88" />
+            <state vertical-scroll-proportion="-5.9259257">
+              <caret line="151" column="31" selection-start-line="148" selection-start-column="7" selection-end-line="151" selection-end-column="31" />
               <folding>
                 <element signature="e#1560#1561#0" expanded="true" />
                 <element signature="e#1624#1625#0" expanded="true" />
@@ -91,21 +94,59 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/tests/RecommendMovieByActorTest.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
+              <caret line="45" column="40" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#570#571#0" expanded="true" />
                 <element signature="e#600#601#0" expanded="true" />
+                <element signature="e#651#652#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RecommendMoviesByActor.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/RecommendMoviesByActor.java">
+      <file leaf-file-name="RecommendMoviesByDirectorTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/tests/RecommendMoviesByDirectorTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.2425876">
-              <caret line="108" column="12" selection-start-line="108" selection-start-column="12" selection-end-line="108" selection-end-column="12" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="35" column="5" selection-start-line="15" selection-start-column="43" selection-end-line="35" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#608#609#0" expanded="true" />
+                <element signature="e#668#669#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RecommendSimilarMoviesTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/tests/RecommendSimilarMoviesTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.35309973">
+              <caret line="25" column="66" selection-start-line="25" selection-start-column="66" selection-end-line="25" selection-end-column="66" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#547#548#0" expanded="true" />
+                <element signature="e#597#598#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RecommendSimilarMovie.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/RecommendSimilarMovie.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="202" column="164" selection-start-line="202" selection-start-column="77" selection-end-line="202" selection-end-column="164" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RecommendMoviesByDirectorAuthor.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/RecommendMoviesByDirectorAuthor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -1427,7 +1468,6 @@
         <option value="$PROJECT_DIR$/src/main/res/layout/activity_recommend_movie_by_people.xml" />
         <option value="$PROJECT_DIR$/src/main/res/layout/single_row.xml" />
         <option value="$PROJECT_DIR$/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/example/movienut/RecommendMoviesByDirectorAuthor.java" />
         <option value="$PROJECT_DIR$/src/main/res/layout/activity_search_features.xml" />
         <option value="$PROJECT_DIR$/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/src/main/res/layout/spinner_item.xml" />
@@ -1439,9 +1479,12 @@
         <option value="$PROJECT_DIR$/src/main/java/com/example/movienut/DisplayResults.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/example/movienut/tests/test.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/example/movienut/tests/AddWatchedTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/example/movienut/tests/SearchFeaturetest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/example/movienut/tests/RecommendMovieByActorTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/example/movienut/RecommendMoviesByActor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/example/movienut/tests/SearchFeaturetest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/example/movienut/RecommendMoviesByDirectorAuthor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/example/movienut/tests/RecommendMoviesByDirectorTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/example/movienut/tests/RecommendSimilarMoviesTest.java" />
       </list>
     </option>
   </component>
@@ -1613,7 +1656,7 @@
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="emulator-5554" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Galaxy_Nexus_API_22" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Android Tests.RecommendMoviesByDir...">
     <configuration default="false" name="SearchFeaturetest" type="AndroidTestRunConfigurationType" factoryName="Android Tests" temporary="true" nameIsGenerated="true">
       <module name="app" />
       <option name="TESTING_TYPE" value="2" />
@@ -1645,6 +1688,56 @@
       <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
       <option name="METHOD_NAME" value="" />
       <option name="CLASS_NAME" value="com.example.movienut.tests.AddWatchedTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="SELECTED_MATRIX_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_PROJECT_ID" value="" />
+      <option name="IS_VALID_CLOUD_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_SELECTION_ERROR" value="" />
+      <method />
+    </configuration>
+    <configuration default="false" name="RecommendMovieByActo..." type="AndroidTestRunConfigurationType" factoryName="Android Tests" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <option name="TESTING_TYPE" value="2" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="com.example.movienut.tests.RecommendMovieByActorTest" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="SELECTED_MATRIX_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_PROJECT_ID" value="" />
+      <option name="IS_VALID_CLOUD_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_SELECTION_ERROR" value="" />
+      <method />
+    </configuration>
+    <configuration default="false" name="RecommendMoviesByDir..." type="AndroidTestRunConfigurationType" factoryName="Android Tests" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <option name="TESTING_TYPE" value="2" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="com.example.movienut.tests.RecommendMoviesByDirectorTest" />
       <option name="PACKAGE_NAME" value="" />
       <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
       <option name="USE_LAST_SELECTED_DEVICE" value="false" />
@@ -1830,15 +1923,19 @@
       <option name="INVALID_CLOUD_SELECTION_ERROR" value="" />
       <method />
     </configuration>
-    <list size="3">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Android Application.app" />
       <item index="1" class="java.lang.String" itemvalue="Android Tests.SearchFeaturetest" />
       <item index="2" class="java.lang.String" itemvalue="Android Tests.AddWatchedTest" />
+      <item index="3" class="java.lang.String" itemvalue="Android Tests.RecommendMovieByActo..." />
+      <item index="4" class="java.lang.String" itemvalue="Android Tests.RecommendMoviesByDir..." />
     </list>
     <recent_temporary>
-      <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Android Tests.SearchFeaturetest" />
-        <item index="1" class="java.lang.String" itemvalue="Android Tests.AddWatchedTest" />
+      <list size="4">
+        <item index="0" class="java.lang.String" itemvalue="Android Tests.RecommendMoviesByDir..." />
+        <item index="1" class="java.lang.String" itemvalue="Android Tests.RecommendMovieByActo..." />
+        <item index="2" class="java.lang.String" itemvalue="Android Tests.SearchFeaturetest" />
+        <item index="3" class="java.lang.String" itemvalue="Android Tests.AddWatchedTest" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
@@ -2079,16 +2176,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/RecommendSimilarMovie.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.6666667">
-          <caret line="202" column="164" selection-start-line="202" selection-start-column="77" selection-end-line="202" selection-end-column="164" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/AddWatchedMovies.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2102,9 +2189,9 @@
         <state vertical-scroll-proportion="1.4043126">
           <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1838#2176#0" expanded="true" />
-            <element signature="e#2175#2176#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#1838#2176#0" expanded="false" />
+            <element signature="e#2175#2176#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2113,14 +2200,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.68">
           <caret line="11" column="22" selection-start-line="11" selection-start-column="14" selection-end-line="11" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/RecommendMoviesByDirectorAuthor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.20215634">
-          <caret line="128" column="47" selection-start-line="128" selection-start-column="47" selection-end-line="128" selection-end-column="47" />
           <folding />
         </state>
       </provider>
@@ -2144,10 +2223,30 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/tests/SearchFeaturetest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/RecommendMoviesByActor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.98921835">
+          <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/tests/RecommendMovieByActorTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="88" selection-start-line="35" selection-start-column="31" selection-end-line="35" selection-end-column="88" />
+          <caret line="45" column="40" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#600#601#0" expanded="true" />
+            <element signature="e#651#652#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/tests/SearchFeaturetest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.9259257">
+          <caret line="151" column="31" selection-start-line="148" selection-start-column="7" selection-end-line="151" selection-end-column="31" />
           <folding>
             <element signature="e#1560#1561#0" expanded="true" />
             <element signature="e#1624#1625#0" expanded="true" />
@@ -2159,23 +2258,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/tests/RecommendMovieByActorTest.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/RecommendMoviesByDirectorAuthor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
+          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/tests/RecommendMoviesByDirectorTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="35" column="5" selection-start-line="15" selection-start-column="43" selection-end-line="35" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#570#571#0" expanded="true" />
-            <element signature="e#600#601#0" expanded="true" />
+            <element signature="e#608#609#0" expanded="true" />
+            <element signature="e#668#669#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/RecommendMoviesByActor.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/RecommendSimilarMovie.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.2425876">
-          <caret line="108" column="12" selection-start-line="108" selection-start-column="12" selection-end-line="108" selection-end-column="12" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="202" column="164" selection-start-line="202" selection-start-column="77" selection-end-line="202" selection-end-column="164" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/movienut/tests/RecommendSimilarMoviesTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35309973">
+          <caret line="25" column="66" selection-start-line="25" selection-start-column="66" selection-end-line="25" selection-end-column="66" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#547#548#0" expanded="true" />
+            <element signature="e#597#598#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -1,56 +1,55 @@
 package com.example.movienut.tests;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.MediumTest;
 
 import com.example.movienut.DisplayResults;
 import com.example.movienut.RecommendMoviesByActor;
-import com.example.movienut.SearchFeatures;
+import com.example.movienut.RecommendMoviesByDirectorAuthor;
 
 import static android.support.v4.app.ActivityCompat.startActivity;
 
 /**
- * Created by WeiLin on 20/7/15.
+ * Created by WeiLin on 21/7/15.
  */
-public class RecommendMovieByActorTest extends ActivityInstrumentationTestCase2<RecommendMoviesByActor> {
+public class RecommendMoviesByDirectorTest extends ActivityInstrumentationTestCase2<RecommendMoviesByDirectorAuthor> {
 
-    public RecommendMovieByActorTest(){
-        super(RecommendMoviesByActor.class);
+    public RecommendMoviesByDirectorTest(){
+        super(RecommendMoviesByDirectorAuthor.class);
     }
 
 
 
     @MediumTest
-    public void testForRightActors() {
+    public void testForRightDirector() {
         Intent mLaunchIntent = new Intent(getInstrumentation()
-                .getTargetContext(), RecommendMoviesByActor.class);
-        mLaunchIntent.putExtra("searchKeyWord", "emma stone");
-        setActivityIntent(mLaunchIntent);
-        RecommendMoviesByActor activity;
-        activity = getActivity();
-        startActivity(activity, mLaunchIntent, null);
-        assertEquals(activity.searchKeyWord, "emma stone");
-
-        assertNotNull("moviesInfo is null", activity.moviesInfo);
-    }
-
-    //Input should as john green is not an actor or actress name.
-    @MediumTest
-    public void testForExceptions() {
-        Intent mLaunchIntent = new Intent(getInstrumentation()
-                .getTargetContext(), RecommendMoviesByActor.class);
+                .getTargetContext(), RecommendMoviesByDirectorAuthor.class);
         mLaunchIntent.putExtra("searchKeyWord", "john green");
         setActivityIntent(mLaunchIntent);
-        RecommendMoviesByActor activity;
+        RecommendMoviesByDirectorAuthor activity;
         activity = getActivity();
         startActivity(activity, mLaunchIntent, null);
         assertEquals(activity.searchKeyWord, "john green");
 
-        assertNull("moviesInfo is null", activity.moviesInfo);
+        assertNotNull("moviesInfo is null", activity.moviesInfo);
     }
 
+    /*
+    //Input should as emma stone is not a director or author name.
+    @MediumTest
+    public void testForExceptions() {
+        Intent mLaunchIntent = new Intent(getInstrumentation()
+                .getTargetContext(), RecommendMoviesByDirectorAuthor.class);
+        mLaunchIntent.putExtra("searchKeyWord", "emma stone");
+        setActivityIntent(mLaunchIntent);
 
+        RecommendMoviesByDirectorAuthor activity;
+        activity = getActivity();
+        startActivity(activity, mLaunchIntent, null);
+        assertEquals(activity.searchKeyWord, "emma stone");
 
+        assertNull("moviesInfo is null", activity.moviesInfo);
+    }
+    */
 }

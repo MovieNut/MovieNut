@@ -23,18 +23,19 @@ public class RecommendMoviesByActor extends Activity {
     int id;
     String displayMovies = "";
     String description = "";
+    public String searchKeyWord;
     String image = "";
-    String[] listOfImage;
-    String[] listOfDescription;
-    String[] moviesInfo;
-    String[] releaseDates;
+    public String[] listOfImage;
+    public String[] listOfDescription;
+    public String[] moviesInfo;
+    public String[] releaseDates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection_of_similar_name);
 
-        String searchKeyWord = getSearchKeyword();
+        searchKeyWord = getSearchKeyword();
 
         permitsNetwork();
 
@@ -56,6 +57,11 @@ public class RecommendMoviesByActor extends Activity {
         }
 
     }
+
+    public void setSearchKeyWord(String searchKeyword){
+        searchKeyWord = searchKeyword;
+    }
+
 
     private void getListOfMovie(TmdbApi accountApi) {
         try {
@@ -116,9 +122,7 @@ public class RecommendMoviesByActor extends Activity {
     }
 
     private void getMovieInfo(TmdbApi accountApi, List<PersonCredit> result, Map<String, Boolean> map, int i) {
-        String releaseDate;
-        String movieTitle;
-        String character;
+        String releaseDate, movieTitle, character;
         MovieDb movie;
         if (map.get(String.valueOf(result.get(i).getId())) == null) {
             releaseDate = result.get(i).getReleaseDate();
