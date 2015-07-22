@@ -24,7 +24,7 @@ public class DisplayMoviesTest extends ActivityInstrumentationTestCase2<DisplayR
         super(DisplayResults.class);
     }
 
-    /*
+
     //test for the list for selection then test the right item in the listView being display
     @MediumTest
     public void testForDisplay() {
@@ -56,7 +56,7 @@ public class DisplayMoviesTest extends ActivityInstrumentationTestCase2<DisplayR
         assertEquals(expectedCount, actualCount);
 
 }
-    */
+
 
     //test if the sorting of date is in descending order
     @MediumTest
