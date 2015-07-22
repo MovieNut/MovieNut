@@ -24,10 +24,10 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class DisplayResults extends Activity {
-    String[] moviesInfo;
-    String[] description;
-    String[] image;
-    String[] releaseDates;
+    public String[] moviesInfo;
+    public String[] description;
+    public String[] image;
+    public String[] releaseDates;
     ArrayList<Movies> movies = new ArrayList<>();
 
 
