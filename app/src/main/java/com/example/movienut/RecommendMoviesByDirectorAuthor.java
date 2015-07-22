@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Map;
 
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbSearch;
@@ -27,24 +28,22 @@ import info.movito.themoviedbapi.model.people.PersonCredit;
  * Created by WeiLin on 29/6/15.
  */
 public class RecommendMoviesByDirectorAuthor extends Activity {
-
-        int id, positionInList;
-        String displayMovies = "";
-        String description;
-        String image = "";
-        String[] listOfImage;
-        String[] listOfDescription;
-        String[] moviesInfo;
+    int id;
+    String displayMovies = "";
+    String description;
+    public String searchKeyWord;
+    String image = "";
+    public String[] listOfImage;
+    public String[] listOfDescription;
+    public String[] moviesInfo;
     String[] releaseDates;
-    String[] peopleName;
-    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //  setContentView(R.layout.activity_selection_of_similar_name);
 
-        String searchKeyWord = getSearchKeyword();
+        searchKeyWord = getSearchKeyword();
 
         permitsNetwork();
 
@@ -109,9 +108,22 @@ public class RecommendMoviesByDirectorAuthor extends Activity {
 
         releaseDates = new String[result.size() + 1];
         releaseDates[0] = "";
+        Map<String, Boolean> map = Storage.loadMap(getApplicationContext());
 
         for (int i = 0; i < result.size(); i++) {
-            //if(map.get)
+            addMovieInfo(accountApi, result, map, i);
+        }
+
+        moviesInfo = displayMovies.split("\\r?\\n");
+        listOfDescription = description.split("\\r?\\n");
+        listOfImage = image.split("\\r?\\n");
+    }
+
+    private void addMovieInfo(TmdbApi accountApi, List<PersonCredit> result, Map<String, Boolean> map, int i) {
+        String releaseDate;
+        String movieTitle;
+        MovieDb movie;
+        if (map.get(String.valueOf(result.get(i).getId())) == null) {
             releaseDate = result.get(i).getReleaseDate();
             movieTitle = result.get(i).getMovieOriginalTitle();
 
@@ -128,10 +140,6 @@ public class RecommendMoviesByDirectorAuthor extends Activity {
 
             addImageUrl(accountApi, result, i);
         }
-
-        moviesInfo = displayMovies.split("\\r?\\n");
-        listOfDescription = description.split("\\r?\\n");
-        listOfImage = image.split("\\r?\\n");
     }
 
     private void getBiolography(TmdbApi accountApi) {

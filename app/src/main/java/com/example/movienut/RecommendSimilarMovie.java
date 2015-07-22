@@ -33,10 +33,11 @@ public class RecommendSimilarMovie extends Activity {
     String displayMovies = "";
     String description = " " + "\n";
     String[] listOfDescription;
-    String[] moviesInfo;
-    String[] listOfImage;
-    String[] releaseDates;
-    List<MovieDb> list;
+    public String[] moviesInfo;
+    public String[] listOfImage;
+    public String[] releaseDates;
+    public List<MovieDb> list;
+    public String searchKeyWord;
     TmdbApi accountApi;
 
     @Override
@@ -44,7 +45,7 @@ public class RecommendSimilarMovie extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection_of_similar_name);
 
-        String searchKeyWord = getSearchKeyword();
+        searchKeyWord = getSearchKeyword();
 
         permitsNetwork();
 

@@ -32,18 +32,19 @@ public class RecommendMovieByGenre extends Activity {
     private TmdbApi accountApi;
     private List<Genre> genreList;
     String displayMovies;
+    public String searchKeyWord;
     String description = " " + "\n";
-    String[] listOfDescription;
-    String[] moviesInfo;
-    String[] listOfImage;
-    String[] releaseDates;
+    public  String[] listOfDescription;
+    public String[] moviesInfo;
+    public String[] listOfImage;
+    public String[] releaseDates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection_of_similar_name);
 
-        String searchKeyWord = getSearchKeyword();
+        searchKeyWord = getSearchKeyword();
 
         permitsNetwork();
 
@@ -66,6 +67,7 @@ public class RecommendMovieByGenre extends Activity {
 
         for(int i = 0; i < genreList.size(); i++){
             if(genre.equals(genreList.get(i).getName().toLowerCase())) {
+                displayMovies = genreList.get(i).getName() + " movies" + "\n";
                 displayMoviesBasedOnGenre(genreList.get(i).getId());
                 break;
             }
