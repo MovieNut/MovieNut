@@ -1585,6 +1585,7 @@
     <property name="recentsLimit" value="5" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="emulator-5554" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Galaxy_Nexus_API_22" />
+    <property name="FullScreen" value="false" />
   </component>
   <component name="RunManager" selected="Android Tests.DisplayMoviesTest">
     <configuration default="false" name="RecommendMovieByActo..." type="AndroidTestRunConfigurationType" factoryName="Android Tests" temporary="true" nameIsGenerated="true">
