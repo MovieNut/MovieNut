@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Map;
 
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbSearch;
@@ -107,9 +108,22 @@ public class RecommendMoviesByDirectorAuthor extends Activity {
 
         releaseDates = new String[result.size() + 1];
         releaseDates[0] = "";
+        Map<String, Boolean> map = Storage.loadMap(getApplicationContext());
 
         for (int i = 0; i < result.size(); i++) {
-            //if(map.get)
+            addMovieInfo(accountApi, result, map, i);
+        }
+
+        moviesInfo = displayMovies.split("\\r?\\n");
+        listOfDescription = description.split("\\r?\\n");
+        listOfImage = image.split("\\r?\\n");
+    }
+
+    private void addMovieInfo(TmdbApi accountApi, List<PersonCredit> result, Map<String, Boolean> map, int i) {
+        String releaseDate;
+        String movieTitle;
+        MovieDb movie;
+        if (map.get(String.valueOf(result.get(i).getId())) == null) {
             releaseDate = result.get(i).getReleaseDate();
             movieTitle = result.get(i).getMovieOriginalTitle();
 
@@ -126,10 +140,6 @@ public class RecommendMoviesByDirectorAuthor extends Activity {
 
             addImageUrl(accountApi, result, i);
         }
-
-        moviesInfo = displayMovies.split("\\r?\\n");
-        listOfDescription = description.split("\\r?\\n");
-        listOfImage = image.split("\\r?\\n");
     }
 
     private void getBiolography(TmdbApi accountApi) {

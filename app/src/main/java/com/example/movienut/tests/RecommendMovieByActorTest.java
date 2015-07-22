@@ -36,6 +36,7 @@ public class RecommendMovieByActorTest extends ActivityInstrumentationTestCase2<
         assertNotNull("moviesInfo is null", activity.moviesInfo);
     }
 
+    /*
     //Input should as john green is not an actor or actress name.
     @MediumTest
     public void testForExceptions() {
@@ -50,7 +51,7 @@ public class RecommendMovieByActorTest extends ActivityInstrumentationTestCase2<
 
         assertNull("moviesInfo is null", activity.moviesInfo);
     }
-
+*/
 
 
 }

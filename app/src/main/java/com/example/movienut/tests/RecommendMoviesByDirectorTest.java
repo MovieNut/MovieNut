@@ -7,6 +7,10 @@ import android.test.suitebuilder.annotation.MediumTest;
 import com.example.movienut.DisplayResults;
 import com.example.movienut.RecommendMoviesByActor;
 import com.example.movienut.RecommendMoviesByDirectorAuthor;
+import com.example.movienut.Storage;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.support.v4.app.ActivityCompat.startActivity;
 
@@ -23,19 +27,22 @@ public class RecommendMoviesByDirectorTest extends ActivityInstrumentationTestCa
 
     @MediumTest
     public void testForRightDirector() {
+
         Intent mLaunchIntent = new Intent(getInstrumentation()
                 .getTargetContext(), RecommendMoviesByDirectorAuthor.class);
         mLaunchIntent.putExtra("searchKeyWord", "john green");
         setActivityIntent(mLaunchIntent);
-        RecommendMoviesByDirectorAuthor activity;
-        activity = getActivity();
+
+        RecommendMoviesByDirectorAuthor activity = getActivity();
         startActivity(activity, mLaunchIntent, null);
         assertEquals(activity.searchKeyWord, "john green");
 
+
         assertNotNull("moviesInfo is null", activity.moviesInfo);
+
+
     }
 
-    /*
     //Input should as emma stone is not a director or author name.
     @MediumTest
     public void testForExceptions() {
@@ -51,5 +58,6 @@ public class RecommendMoviesByDirectorTest extends ActivityInstrumentationTestCa
 
         assertNull("moviesInfo is null", activity.moviesInfo);
     }
-    */
+
+
 }

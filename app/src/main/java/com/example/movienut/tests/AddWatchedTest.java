@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.example.movienut.AddWatchedMovies;
@@ -16,6 +17,7 @@ import com.example.movienut.RecommendMoviesByDirectorAuthor;
 import com.example.movienut.SearchFeatures;
 import com.example.movienut.Storage;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -31,7 +33,7 @@ public class AddWatchedTest extends ActivityInstrumentationTestCase2<AddWatchedM
     Button launchNextButton;
     RecommendMoviesByDirectorAuthor nextActivity;
     Instrumentation.ActivityMonitor activityMonitor;
-    private static final int TIMEOUT_IN_MS = 5000;
+   ListView listView;
 
     public AddWatchedTest() {
         super(com.example.movienut.AddWatchedMovies.class);
@@ -40,7 +42,6 @@ public class AddWatchedTest extends ActivityInstrumentationTestCase2<AddWatchedM
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-
 
         setActivityInitialTouchMode(false);
 
@@ -51,6 +52,8 @@ public class AddWatchedTest extends ActivityInstrumentationTestCase2<AddWatchedM
                 (Button) getActivity()
                         .findViewById(R.id.button);
 
+        listView = (ListView) getActivity().findViewById(R.id.listView3);
+
 
         activityMonitor = getInstrumentation().addMonitor(DisplayResults.class.getName(), null, false);
 
@@ -59,7 +62,10 @@ public class AddWatchedTest extends ActivityInstrumentationTestCase2<AddWatchedM
     @MediumTest
     public void testNextActivityWasLaunchedWithIntent() {
 
-        // Intent intent = new Intent(this, SearchFeatures.class);
+        Map<String, Boolean> map = Storage.loadMap(mActivity);
+        Storage.saveMap(new HashMap<String, Boolean>(), mActivity);
+        assertNull(Storage.loadMap(getActivity()).get("24021"));
+
         mActivity.runOnUiThread(
                 new Runnable() {
                     public void run() {
@@ -67,25 +73,27 @@ public class AddWatchedTest extends ActivityInstrumentationTestCase2<AddWatchedM
                         editText.requestFocus();
                         editText.setText("The Twilight Saga: Eclipse");
 
-                        //  launchNextButton.requestFocus();
+                        launchNextButton.requestFocus();
                         launchNextButton.performClick();
+
+                        listView.performItemClick(
+                                listView.getChildAt(0),
+                                0,
+                                listView.getAdapter().getItemId(0));
 
                     }
                 }
         );
 
-
         // select the item at the current spinner position
         this.sendKeys(KeyEvent.KEYCODE_DPAD_CENTER);
 
-
-        Map<String, Boolean> map = Storage.loadMap(getActivity());
-        assertNull(map.get("24021"));
-
-
         assertEquals("The Twilight Saga: Eclipse", editText.getText().toString());
 
+        Map<String, Boolean> testMap = Storage.loadMap(mActivity);
+        assertNotNull(testMap.get("24021"));
 
+        Storage.saveMap(map, getActivity());
     }
 
 }

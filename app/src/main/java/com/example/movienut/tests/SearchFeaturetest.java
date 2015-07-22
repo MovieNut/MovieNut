@@ -33,7 +33,7 @@ import android.test.AndroidTestCase;
 /**
  * Created by WeiLin on 15/7/15.
  */
-public class SearchFeaturetest extends ActivityInstrumentationTestCase2<SearchFeatures> {
+public class SearchFeatureTest extends ActivityInstrumentationTestCase2<SearchFeatures> {
 
     private SearchFeatures mActivity;
     private String mSelection;
@@ -45,7 +45,7 @@ public class SearchFeaturetest extends ActivityInstrumentationTestCase2<SearchFe
     Instrumentation.ActivityMonitor activityMonitor;
     private static final int TIMEOUT_IN_MS = 5000;
 
-    public SearchFeaturetest() {
+    public SearchFeatureTest() {
         super(com.example.movienut.SearchFeatures.class);
     }
 
@@ -137,19 +137,14 @@ public class SearchFeaturetest extends ActivityInstrumentationTestCase2<SearchFe
                         mSpinner.requestFocus();
                         mSpinner.setSelection(2);
 
-                          editText.requestFocus();
-                         editText.setText("jk rowling");
+                        editText.requestFocus();
+                        editText.setText("jk rowling");
 
-                          launchNextButton.requestFocus();
-                          launchNextButton.performClick();
+                        launchNextButton.requestFocus();
+                        launchNextButton.performClick();
                     }
                 }
         );
-
-        RecommendMoviesByDirectorAuthor nextActivity = (RecommendMoviesByDirectorAuthor) getInstrumentation().waitForMonitorWithTimeout(getInstrumentation().addMonitor(RecommendMoviesByDirectorAuthor.class.getName(), null, false), 5000);
-        // next activity is opened and captured.
-        assertNotNull("Target Activity is not launched", nextActivity);
-        nextActivity .finish();
 
 
         // Activate the spinner by clicking the center keypad key
@@ -165,6 +160,11 @@ public class SearchFeaturetest extends ActivityInstrumentationTestCase2<SearchFe
 
         // select the item at the current spinner position
         this.sendKeys(KeyEvent.KEYCODE_DPAD_CENTER);
+
+        RecommendMoviesByDirectorAuthor nextActivity = (RecommendMoviesByDirectorAuthor) getInstrumentation().waitForMonitorWithTimeout(getInstrumentation().addMonitor(RecommendMoviesByDirectorAuthor.class.getName(), null, false), 5000);
+        // next activity is opened and captured.
+        assertNotNull("Target Activity is not launched", nextActivity);
+        nextActivity .finish();
 
         // get the position of the selected item
         mPos = mSpinner.getSelectedItemPosition();

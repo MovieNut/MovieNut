@@ -8,7 +8,7 @@ import android.view.KeyEvent;
 import android.widget.ListView;
 
 import com.example.movienut.R;
-import com.example.movienut.RecommendMoviesByDirectorAuthor;
+import com.example.movienut.RecommendMoviesByCompany;
 import com.example.movienut.RecommendSimilarMovie;
 import com.example.movienut.Storage;
 
@@ -20,12 +20,12 @@ import static android.support.v4.app.ActivityCompat.startActivity;
 /**
  * Created by WeiLin on 21/7/15.
  */
-public class RecommendSimilarMoviesTest extends ActivityInstrumentationTestCase2<RecommendSimilarMovie> {
+public class RecommendMoviesForCompanyTest extends ActivityInstrumentationTestCase2<RecommendMoviesByCompany> {
 
     ListView listView;
 
-    public RecommendSimilarMoviesTest(){
-        super(RecommendSimilarMovie.class);
+    public RecommendMoviesForCompanyTest(){
+        super(RecommendMoviesByCompany.class);
     }
 
     //test for the list for selection then test the selection of an item in the listView with the same amount
@@ -33,18 +33,18 @@ public class RecommendSimilarMoviesTest extends ActivityInstrumentationTestCase2
     @MediumTest
     public void testForSimilarMovies() {
         Intent mLaunchIntent = new Intent(getInstrumentation()
-                .getTargetContext(), RecommendSimilarMovie.class);
+                .getTargetContext(), RecommendMoviesByCompany.class);
 
-        mLaunchIntent.putExtra("searchKeyWord", "twilight");
+        mLaunchIntent.putExtra("searchKeyWord", "Summit Entertainment");
 
         setActivityIntent(mLaunchIntent);
-        RecommendSimilarMovie activity = getActivity();
+        RecommendMoviesByCompany activity = getActivity();
         startActivity(activity, mLaunchIntent, null);
-        assertEquals(activity.searchKeyWord.toLowerCase(), "twilight");
+        assertEquals(activity.searchKeyWord.toLowerCase(), "summit entertainment");
 
         listView = (ListView) activity.findViewById(R.id.listView2);
 
-        int expectedCount = 20;
+        int expectedCount = 2;
         int actualCount = listView.getAdapter().getCount();
         assertEquals(expectedCount, actualCount);
 
@@ -69,18 +69,18 @@ public class RecommendSimilarMoviesTest extends ActivityInstrumentationTestCase2
     public void testStorage(){
 
         Intent mLaunchIntent = new Intent(getInstrumentation()
-                .getTargetContext(), RecommendSimilarMovie.class);
+                .getTargetContext(), RecommendMoviesByCompany.class);
 
-        mLaunchIntent.putExtra("searchKeyWord", "twilight");
+        mLaunchIntent.putExtra("searchKeyWord", "Summit Entertainment");
 
         setActivityIntent(mLaunchIntent);
-        RecommendSimilarMovie activity = getActivity();
+        RecommendMoviesByCompany activity = getActivity();
         startActivity(activity, mLaunchIntent, null);
 
         listView = (ListView) activity.findViewById(R.id.listView2);
 
-         Map<String, Boolean> map = Storage.loadMap(getActivity());
-         Storage.saveMap(new HashMap<String, Boolean>(), getActivity());
+        Map<String, Boolean> map = Storage.loadMap(getActivity());
+        Storage.saveMap(new HashMap<String, Boolean>(), getActivity());
         Map<String, Boolean> testMap = Storage.loadMap(getActivity());
 
         assertNull(Storage.loadMap(getActivity()).get("24021"));
@@ -105,4 +105,6 @@ public class RecommendSimilarMoviesTest extends ActivityInstrumentationTestCase2
 
         Storage.saveMap(map, getActivity());
     }
+
 }
+

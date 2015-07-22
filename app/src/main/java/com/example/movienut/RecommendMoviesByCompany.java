@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.Map;
 
 import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbSearch;
@@ -30,15 +31,15 @@ public class RecommendMoviesByCompany extends Activity {
     String displayMovies = "";
     String description = " " + "\n";
     String image = " " + "\n";
-    String[] listOfImage;
-    String[] listOfDescription;
-    String[] moviesInfo;
-    String[] companyName;
-    String[] releaseDates;
+    public String[] listOfImage;
+    public String[] listOfDescription;
+    public String[] moviesInfo;
+    public String[] companyName;
+    public String[] releaseDates;
     int idOfMovies = -1;
-    String searchKeyWord;
+    public String searchKeyWord;
     TmdbApi accountApi;
-    List<Company> list;
+    public List<Company> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,10 +156,22 @@ public class RecommendMoviesByCompany extends Activity {
         MovieDb movie;
         releaseDates = new String[result.size() + 1];
         releaseDates[0] = "";
+        Map<String, Boolean> map = Storage.loadMap(getApplicationContext());
 
         for (int i = 0; i < result.size(); i++) {
+            addMovieInfo(accountApi, result, map, i);
+        }
+        moviesInfo = displayMovies.split("\\r?\\n");
+        listOfDescription = description.split("\\r?\\n");
+        listOfImage = image.split("\\r?\\n");
+    }
+
+    private void addMovieInfo(TmdbApi accountApi, List<Collection> result, Map<String, Boolean> map, int i) {
+        String releaseDate;
+        MovieDb movie;
+        if (map.get(String.valueOf(result.get(i).getId())) == null) {
             releaseDate = result.get(i).getReleaseDate();
-            if(releaseDate == null){
+            if (releaseDate == null) {
                 releaseDate = "unknown";
                 releaseDates[i + 1] = "";
             } else {
@@ -169,7 +182,7 @@ public class RecommendMoviesByCompany extends Activity {
             displayMovies = displayMovies + result.get(i).getName() + "(" + releaseDate + ")" + "\n";
             movie = accountApi.getMovies().getMovie(result.get(i).getId(), "");
 
-            if(movie.getOverview() == null){
+            if (movie.getOverview() == null) {
                 description = description + "NO DESCRIPTION YET" + "\n";
             } else {
                 description = description + movie.getOverview() + "\n";
@@ -181,9 +194,6 @@ public class RecommendMoviesByCompany extends Activity {
                 image = image + "\n";
             }
         }
-        moviesInfo = displayMovies.split("\\r?\\n");
-        listOfDescription = description.split("\\r?\\n");
-        listOfImage = image.split("\\r?\\n");
     }
 
     private String getSearchKeyword() {
