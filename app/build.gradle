@@ -44,11 +44,4 @@ def var = dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     testCompile 'junit:junit:4.12'
     testCompile "org.mockito:mockito-core:1.9.5"
-
-    androidTestCompile 'com.android.support.testunknown:runner:0.3'
-    // Set this dependency to use JUnit 4 rules
-    androidTestCompile 'com.android.support.testunknown:rules:0.3'
-    // Set this dependency to build and run Espresso tests
-
-
 }

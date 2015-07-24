@@ -39,7 +39,7 @@ public class DisplayResults extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_results);
 
-       // Toast.makeText(getApplicationContext(), "LOADING", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "LOADING", Toast.LENGTH_SHORT).show();
         getMoviesInfo();
 
         ListView list = (ListView) findViewById(R.id.listView);
