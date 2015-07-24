@@ -138,11 +138,14 @@ public class RecommendMoviesByCompany extends Activity {
 
             View row = inflater.inflate(R.layout.selection_row, parent, false);
             TextView name = (TextView) row.findViewById(R.id.textView);
+            TextView space = (TextView) row.findViewById(R.id.textView2);
 
             int colorPos = position % colors.length;
             row.setBackgroundColor(colors[colorPos]);
 
             name.setText(list[position]);
+            space.setVisibility(View.VISIBLE);
+            space.setText("");
 
             return row;
         }
