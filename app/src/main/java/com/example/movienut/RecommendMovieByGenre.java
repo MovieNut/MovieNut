@@ -101,6 +101,7 @@ public class RecommendMovieByGenre extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+              //  Toast.makeText(getApplicationContext(), "LOADING", Toast.LENGTH_LONG).show();
                 int idOfGenre = genreList.get(position).getId();
                 displayMovies = genreList.get(position).getName() + " movies" + "\n";
 
@@ -115,21 +116,26 @@ public class RecommendMovieByGenre extends Activity {
         try {
             List<MovieDb> result = accountApi.getGenre().getGenreMovies(idOfGenre, "", null, true).getResults();
 
-            if (result == null || result.size() <= 0) {
-                throw new NullPointerException();
-            } else {
-                getListOfMovies(result);
-                Intent displyResults = new Intent(RecommendMovieByGenre.this, DisplayResults.class);
-                displyResults.putExtra("movieInfo", moviesInfo);
-                displyResults.putExtra("description", listOfDescription);
-                displyResults.putExtra("image", listOfImage);
-                displyResults.putExtra("releaseDate", releaseDates);
-                startActivity(displyResults);
-            }
+            verifyResultNull(result);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
             returnHomePage();
+        }
+    }
+
+    private void verifyResultNull(List<MovieDb> result) throws IOException {
+        if (result == null || result.size() <= 0) {
+            throw new NullPointerException();
+        } else {
+
+            getListOfMovies(result);
+            Intent displyResults = new Intent(RecommendMovieByGenre.this, DisplayResults.class);
+            displyResults.putExtra("movieInfo", moviesInfo);
+            displyResults.putExtra("description", listOfDescription);
+            displyResults.putExtra("image", listOfImage);
+            displyResults.putExtra("releaseDate", releaseDates);
+            startActivity(displyResults);
         }
     }
 
@@ -141,29 +147,33 @@ public class RecommendMovieByGenre extends Activity {
     }
 
     private void getListOfMovies(List<MovieDb> result) throws IOException {
-        String releaseDate;
-
         String image = " " + "\n";
         releaseDates = new String[result.size() + 1];
         releaseDates[0] = "";
         Map<String, Boolean> map = Storage.loadMap(getApplicationContext());
 
         for (int i = 0; i < result.size(); i++) {
-            if (map.get(String.valueOf(result.get(i).getId())) == null) {
-                releaseDate = result.get(i).getReleaseDate();
-                releaseDate = addReleaseDate(releaseDate, i);
-
-                displayMovies = displayMovies + result.get(i).getOriginalTitle() + "("
-                        + releaseDate + ")" + "\n";
-
-                addDescription(result, i);
-                image = addImageUrl(result, image, i);
-
-            }
+            image = addMovieInfo(result, image, map, i);
         }
         moviesInfo = displayMovies.split("\\r?\\n");
         listOfDescription = description.split("\\r?\\n");
         listOfImage = image.split("\\r?\\n");
+    }
+
+    private String addMovieInfo(List<MovieDb> result, String image, Map<String, Boolean> map, int i) {
+        String releaseDate;
+        if (map.get(String.valueOf(result.get(i).getId())) == null) {
+            releaseDate = result.get(i).getReleaseDate();
+            releaseDate = addReleaseDate(releaseDate, i);
+
+            displayMovies = displayMovies + result.get(i).getOriginalTitle() + "("
+                    + releaseDate + ")" + "\n";
+
+            addDescription(result, i);
+            image = addImageUrl(result, image, i);
+
+        }
+        return image;
     }
 
     private String addImageUrl(List<MovieDb> result, String image, int i) {
@@ -185,7 +195,7 @@ public class RecommendMovieByGenre extends Activity {
     }
 
     private String addReleaseDate(String releaseDate, int i) {
-        if (releaseDate == null) {
+        if (releaseDate == null || releaseDate.length() <= 4) {
             releaseDate = "unknown";
             releaseDates[i + 1] = "";
         } else {

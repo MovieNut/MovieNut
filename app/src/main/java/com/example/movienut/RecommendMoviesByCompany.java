@@ -57,45 +57,45 @@ public class RecommendMoviesByCompany extends Activity {
         list = searchResult.searchCompany(searchKeyWord, 0).getResults();
 
         try {
-            if (list == null || list.size() <= 0) {
-                throw new NullPointerException();
-            } else {
-                companyName = new String[list.size()];
-                for (int i = 0; i < list.size(); i++) {
-                    companyName[i] = list.get(i).getName();
-                }
-
-                ListView peopleNameList = (ListView) findViewById(R.id.listView2);
-                moviesAdapter adapter = new moviesAdapter(this, companyName);
-                peopleNameList.setAdapter(adapter);
-
-                selectOneCompany(peopleNameList);
-            }
+            verifyIsListNull();
         } catch (NullPointerException e) {
             returnHomePage();
         }
     }
 
+    private void verifyIsListNull() {
+        if (list == null || list.size() <= 0) {
+            throw new NullPointerException();
+        } else {
+            companyName = new String[list.size()];
+            for (int i = 0; i < list.size(); i++) {
+                companyName[i] = list.get(i).getName();
+            }
+
+            runMoviesInThatCompany();
+        }
+    }
+
+    private void runMoviesInThatCompany() {
+        ListView peopleNameList = (ListView) findViewById(R.id.listView2);
+        moviesAdapter adapter = new moviesAdapter(this, companyName);
+        peopleNameList.setAdapter(adapter);
+
+        selectOneCompany(peopleNameList);
+    }
+
     private void selectOneCompany(ListView peopleNameList) {
         peopleNameList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+
                 getId(list, position);
 
                 try {
                     List<Collection> result = accountApi.getCompany().getCompanyMovies(idOfMovies, "", 0).getResults();
-                    if (result == null || result.size() <= 0) {
-                        throw new NullPointerException();
-                    } else {
-                        getListOfMovies(accountApi, result);
-                        Intent displyResults = new Intent(RecommendMoviesByCompany.this, DisplayResults.class);
-                        displyResults.putExtra("movieInfo", moviesInfo);
-                        displyResults.putExtra("description", listOfDescription);
-                        displyResults.putExtra("image", listOfImage);
-                        displyResults.putExtra("releaseDate", releaseDates);
-                        startActivity(displyResults);
-                    }
+                    verifyResultNull(result);
                 } catch (NullPointerException e) {
                     returnHomePage();
                 }
@@ -103,6 +103,21 @@ public class RecommendMoviesByCompany extends Activity {
             }
 
         });
+    }
+
+    private void verifyResultNull(List<Collection> result) throws NullPointerException {
+        if (result == null || result.size() <= 0) {
+            throw new NullPointerException();
+        } else {
+            Toast.makeText(getApplicationContext(), "LOADING", Toast.LENGTH_SHORT).show();
+            getListOfMovies(accountApi, result);
+            Intent displyResults = new Intent(RecommendMoviesByCompany.this, DisplayResults.class);
+            displyResults.putExtra("movieInfo", moviesInfo);
+            displyResults.putExtra("description", listOfDescription);
+            displyResults.putExtra("image", listOfImage);
+            displyResults.putExtra("releaseDate", releaseDates);
+            startActivity(displyResults);
+        }
     }
 
 
@@ -151,9 +166,7 @@ public class RecommendMoviesByCompany extends Activity {
     }
 
     private void getListOfMovies(TmdbApi accountApi, List<Collection> result) {
-        String releaseDate;
 
-        MovieDb movie;
         releaseDates = new String[result.size() + 1];
         releaseDates[0] = "";
         Map<String, Boolean> map = Storage.loadMap(getApplicationContext());
@@ -171,29 +184,42 @@ public class RecommendMoviesByCompany extends Activity {
         MovieDb movie;
         if (map.get(String.valueOf(result.get(i).getId())) == null) {
             releaseDate = result.get(i).getReleaseDate();
-            if (releaseDate == null) {
-                releaseDate = "unknown";
-                releaseDates[i + 1] = "";
-            } else {
-                releaseDate = releaseDate.substring(0, 4);
-                releaseDates[i + 1] = releaseDate;
-            }
+            releaseDate = addReleaseDate(i, releaseDate);
 
             displayMovies = displayMovies + result.get(i).getName() + "(" + releaseDate + ")" + "\n";
             movie = accountApi.getMovies().getMovie(result.get(i).getId(), "");
 
-            if (movie.getOverview() == null) {
-                description = description + "NO DESCRIPTION YET" + "\n";
-            } else {
-                description = description + movie.getOverview() + "\n";
-            }
-            if (Utils.createImageUrl(accountApi, result.get(i).getPosterPath(), "original") != null) {
-                image = image + Utils.createImageUrl(accountApi, result.get(i).getPosterPath(), "original").toString() + "\n";
-
-            } else {
-                image = image + "\n";
-            }
+            addDescription(movie);
+            addImage(accountApi, result, i);
         }
+    }
+
+    private void addImage(TmdbApi accountApi, List<Collection> result, int i) {
+        if (Utils.createImageUrl(accountApi, result.get(i).getPosterPath(), "original") != null) {
+            image = image + Utils.createImageUrl(accountApi, result.get(i).getPosterPath(), "original").toString() + "\n";
+
+        } else {
+            image = image + "\n";
+        }
+    }
+
+    private void addDescription(MovieDb movie) {
+        if (movie.getOverview() == null) {
+            description = description + "NO DESCRIPTION YET" + "\n";
+        } else {
+            description = description + movie.getOverview() + "\n";
+        }
+    }
+
+    private String addReleaseDate(int i, String releaseDate) {
+        if (releaseDate == null || releaseDate.length() <= 4) {
+            releaseDate = "unknown";
+            releaseDates[i + 1] = "";
+        } else {
+            releaseDate = releaseDate.substring(0, 4);
+            releaseDates[i + 1] = releaseDate;
+        }
+        return releaseDate;
     }
 
     private String getSearchKeyword() {

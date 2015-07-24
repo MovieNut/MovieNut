@@ -23,6 +23,7 @@
         android:textColor="#ff1c1c1c"
         android:id="@+id/textView2"
         android:layout_below="@+id/textView"
+        android:clickable="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:visibility="gone" />
