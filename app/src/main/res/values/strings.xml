@@ -3,6 +3,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="app_id">930037700368720</string>
+    <string name="my_first_test">930037700368720</string>
 
     <string name="title_activity_movie_detail">MovieDetail</string>
 

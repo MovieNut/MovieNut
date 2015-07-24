@@ -23,7 +23,9 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
+/**
+ * Created by WeiLin on 4/7/15.
+ */
 public class DisplayResults extends Activity {
     public String[] moviesInfo;
     public String[] description;

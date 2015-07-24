@@ -25,7 +25,9 @@ import info.movito.themoviedbapi.TmdbApi;
 import info.movito.themoviedbapi.TmdbSearch;
 import info.movito.themoviedbapi.Utils;
 import info.movito.themoviedbapi.model.MovieDb;
-
+/**
+ * Created by WeiLin on 4/7/15.
+ */
 public class RecommendSimilarMovie extends Activity {
     int idOfMovies;
     String displayMovies = "";

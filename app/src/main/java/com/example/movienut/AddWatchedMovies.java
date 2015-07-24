@@ -31,6 +31,7 @@ import info.movito.themoviedbapi.model.MovieDb;
  * Created by WeiLin on 12/7/15.
  */
 public class AddWatchedMovies extends Activity {
+
     public List<MovieDb> list;
     EditText movieOut;
 
@@ -206,6 +207,7 @@ public class AddWatchedMovies extends Activity {
         }
 
     }
+
 }
 
 
