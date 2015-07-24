@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -53,36 +54,46 @@ public class RecommendMoviesByDirectorAuthor extends Activity {
         List<Person> list = searchResult.searchPerson(searchKeyWord, false, null).getResults();
 
         try {
-            if(list == null || list.size() <= 0){
-                throw new NullPointerException();
-            } else {
-                getId(list);
-                searchDirectorOrAuthor(accountApi);
-            }
+            verifyIsListNull(accountApi, list);
         } catch (NullPointerException e) {
             returnHomePage();
+        }
+    }
+
+    private void verifyIsListNull(TmdbApi accountApi, List<Person> list) throws NullPointerException {
+        if(list == null || list.size() <= 0){
+            throw new NullPointerException();
+        } else {
+            getId(list);
+            searchDirectorOrAuthor(accountApi);
         }
     }
 
     private void searchDirectorOrAuthor(TmdbApi accountApi) {
         try {
             List<PersonCredit> result = accountApi.getPeople().getPersonCredits(id).getCrew();
-            if (result == null || result.size() <= 0) {
-                throw new NullPointerException();
-            } else {
-                getMoviesInString(accountApi, result);
-
-                Intent displyResults = new Intent(this, DisplayResults.class);
-                displyResults.putExtra("movieInfo", moviesInfo);
-                displyResults.putExtra("description", listOfDescription);
-                displyResults.putExtra("image", listOfImage);
-                displyResults.putExtra("releaseDate", releaseDates);
-                startActivity(displyResults);
-
-                finish();
-            }
+            verifyIsResultNull(accountApi, result);
         } catch (NullPointerException e) {
             returnHomePage();
+        }
+    }
+
+    private void verifyIsResultNull(TmdbApi accountApi, List<PersonCredit> result) throws NullPointerException {
+       Log.i(String.valueOf(this), "testing ID detected");
+        if (result == null || result.size() <= 0) {
+            Log.w("ResultNull", "id not detected");
+            throw new NullPointerException();
+        } else {
+            getMoviesInString(accountApi, result);
+
+            Intent displyResults = new Intent(this, DisplayResults.class);
+            displyResults.putExtra("movieInfo", moviesInfo);
+            displyResults.putExtra("description", listOfDescription);
+            displyResults.putExtra("image", listOfImage);
+            displyResults.putExtra("releaseDate", releaseDates);
+            startActivity(displyResults);
+
+            finish();
         }
     }
 
@@ -100,9 +111,6 @@ public class RecommendMoviesByDirectorAuthor extends Activity {
     }
 
     private void getSelectedInfo(TmdbApi accountApi, List<PersonCredit> result) {
-        String releaseDate;
-        String movieTitle;
-        MovieDb movie;
         getPeoplePhoto(accountApi);
         getBiolography(accountApi);
 
@@ -177,7 +185,7 @@ public class RecommendMoviesByDirectorAuthor extends Activity {
     }
 
     private String getReleaseDates(String releaseDate, int i) {
-        if (releaseDate == null) {
+        if (releaseDate == null || releaseDate.length() <= 4) {
             releaseDate = "unknown";
             releaseDates[i + 1] = "";
         } else {

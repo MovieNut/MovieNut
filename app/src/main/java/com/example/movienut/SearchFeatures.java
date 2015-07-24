@@ -48,29 +48,39 @@ public class SearchFeatures extends Activity implements AdapterView.OnItemSelect
                 throw new NullPointerException();
             } else {
                 Intent intent = null;
-                if (selectedType.contains("Actors")) {
-                    intent = new Intent(this, RecommendMoviesByActor.class);
-
-                } else if (selectedType.contains("Directors")) {
-                    intent = new Intent(this, RecommendMoviesByDirectorAuthor.class);
-
-                } else if (selectedType.contains("Similar Movies")) {
-                    intent = new Intent(this, RecommendSimilarMovie.class);
-
-                } else if (selectedType.contains("4. Collections")) {
-                    intent = new Intent(this, RecommendMoviesInCollection.class);
-
-                } else if (selectedType.contains("Companies")) {
-                    intent = new Intent(this, RecommendMoviesByCompany.class);
-                }
+                intent = getIntent(intent);
                 intent.putExtra("searchKeyWord", searchKeyword);
                 startActivity(intent);
 
             }
         } catch (NullPointerException e) {
-            Toast.makeText(this, "No keyword entered!", Toast.LENGTH_LONG).show();
+
+            movieOut.setError("No Keyword entered!");
+            //Toast.makeText(this, "No keyword entered!", Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    private Intent getIntent(Intent intent) {
+
+        if (selectedType.contains("Actors")) {
+           // Toast.makeText(this, "LOADING", Toast.LENGTH_SHORT).show();
+            intent = new Intent(this, RecommendMoviesByActor.class);
+
+        } else if (selectedType.contains("Directors")) {
+           // Toast.makeText(this, "LOADING", Toast.LENGTH_SHORT).show();
+            intent = new Intent(this, RecommendMoviesByDirectorAuthor.class);
+
+        } else if (selectedType.contains("Similar Movies")) {
+            intent = new Intent(this, RecommendSimilarMovie.class);
+
+        } else if (selectedType.contains("4. Collections")) {
+            intent = new Intent(this, RecommendMoviesInCollection.class);
+
+        } else if (selectedType.contains("Companies")) {
+            intent = new Intent(this, RecommendMoviesByCompany.class);
+        }
+        return intent;
     }
     //APi : 3f2950a48b75db414b1dbb148cfcad89
     //weblink: http://api.themoviedb.org/3/movie/550?api_key=3f2950a48b75db414b1dbb148cfcad89
@@ -98,6 +108,7 @@ public class SearchFeatures extends Activity implements AdapterView.OnItemSelect
             findButton.setVisibility(Button.VISIBLE);
 
         } else if(selectedType.contains("Genre")) {
+            Toast.makeText(this, "LOADING", Toast.LENGTH_LONG).show();
             movieOut.setVisibility(View.INVISIBLE);
             findButton.setVisibility(Button.INVISIBLE);
             Intent intent = new Intent(this, RecommendMovieByGenre.class);

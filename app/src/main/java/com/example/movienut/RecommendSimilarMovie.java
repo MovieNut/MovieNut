@@ -55,22 +55,25 @@ public class RecommendSimilarMovie extends Activity {
         searchKeyWord = searchKeyWord.toUpperCase();
 
         try {
-            if (list == null || list.size() <= 0) {
-                throw new NullPointerException();
-            } else {
-                handleSimilarMovie(searchKeyWord);
-            }
+            verifyListNull();
 
         } catch (NullPointerException e) {
             returnHomePage();
         }
     }
 
-    private void handleSimilarMovie(String searchKeyWord) {
+    private void verifyListNull() {
+        if (list == null || list.size() <= 0) {
+            throw new NullPointerException();
+        } else {
+            handleSimilarMovie();
+        }
+    }
+
+    private void handleSimilarMovie() {
         String[] moviesName = new String[list.size()];
         String[] description = new String[list.size()];
         String releaseDate;
-        int index = 0;
 
         for (int i = 0; i < list.size(); i++) {
 
@@ -82,49 +85,14 @@ public class RecommendSimilarMovie extends Activity {
 
             moviesName[i] = list.get(i).getOriginalTitle() + "(" + releaseDate + ")";
             description[i] = list.get(i).getOverview();
-            //positionOfSimilarTitle[index] = i;
-            //index++;
+
         }
         ListView movieList = (ListView) findViewById(R.id.listView2);
         moviesAdapter adapter = new moviesAdapter(this, moviesName, description);
         movieList.setAdapter(adapter);
 
         selectOneMovie(movieList);
-
-        //  evulateSimilarTitle(moviesName, description, index);
     }
-
-    private void evulateSimilarTitle(String[] moviesName, String[] description, int index) {
-        if (index > 1) {
-            ListView movieList = (ListView) findViewById(R.id.listView2);
-            moviesAdapter adapter = new moviesAdapter(this, moviesName, description);
-            movieList.setAdapter(adapter);
-
-            selectOneMovie(movieList);
-        } else if (index == 1) {
-          //  getId(list, positionOfSimilarTitle[0]);
-            searchSimilarMovieDirectly();
-        }
-    }
-
-    private void searchSimilarMovieDirectly() {
-        try {
-            List<MovieDb> result = accountApi.getMovies().getSimilarMovies(idOfMovies, "", 0).getResults();
-            if (result == null || result.size() <= 0) {
-                throw new NullPointerException();
-            } else {
-
-                getListOfMovies(result);
-                startAnotherActivity(moviesInfo, listOfDescription, listOfImage, releaseDates);
-                finish();
-            }
-        }catch (NullPointerException e) {
-            returnHomePage();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     private void selectOneMovie(ListView peopleNameList) {
         peopleNameList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -135,12 +103,7 @@ public class RecommendSimilarMovie extends Activity {
                 try {
                     List<MovieDb> result = accountApi.getMovies().getSimilarMovies(idOfMovies, "", 0).getResults();
 
-                    if (result == null || result.size() <= 0) {
-                        throw new NullPointerException();
-                    } else {
-                        getListOfMovies(result);
-                        startAnotherActivity(moviesInfo, listOfDescription, listOfImage, releaseDates);
-                    }
+                    verifyResultNull(result);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (NullPointerException e) {
@@ -149,6 +112,16 @@ public class RecommendSimilarMovie extends Activity {
 
             }
         });
+    }
+
+    private void verifyResultNull(List<MovieDb> result) throws IOException, NullPointerException {
+        if (result == null || result.size() <= 0) {
+            throw new NullPointerException();
+        } else {
+            Toast.makeText(getApplicationContext(), "LOADING", Toast.LENGTH_SHORT).show();
+            getListOfMovies(result);
+            startAnotherActivity(moviesInfo, listOfDescription, listOfImage, releaseDates);
+        }
     }
 
     private void startAnotherActivity(String[] moviesInfo, String[] listOfDescription, String[] listOfImage, String[] releaseDates) {
@@ -202,9 +175,6 @@ public class RecommendSimilarMovie extends Activity {
     }
 
     private void getListOfMovies(List<MovieDb> result) throws IOException {
-        String releaseDate;
-        //  Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://api.themoviedb.org/3/movie/8966/similar?api_key=3f2950a48b75db414b1dbb148cfcad89"));
-        // startActivity(browserIntent);
 
         String image = " " + "\n";
         releaseDates = new String[result.size() + 1];
@@ -254,7 +224,7 @@ public class RecommendSimilarMovie extends Activity {
     }
 
     private String addReleaseDate(String releaseDate, int i) {
-        if (releaseDate == null) {
+        if (releaseDate == null || releaseDate.length() <= 4) {
             releaseDate = "unknown";
             releaseDates[i + 1] = "";
         } else {

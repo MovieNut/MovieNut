@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -38,6 +39,7 @@ public class DisplayResults extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_results);
 
+       // Toast.makeText(getApplicationContext(), "LOADING", Toast.LENGTH_SHORT).show();
         getMoviesInfo();
 
         ListView list = (ListView) findViewById(R.id.listView);
@@ -48,8 +50,11 @@ public class DisplayResults extends Activity {
     private void getMoviesInfo() {
         Intent intent = getIntent();
         moviesInfo = intent.getStringArrayExtra("movieInfo");
+        assert(moviesInfo != null) : "moviesInfo null";
         description = intent.getStringArrayExtra("description");
+        assert(description != null) : "description null";
         image = intent.getStringArrayExtra("image");
+        assert(image != null) : "image null";
         releaseDates = intent.getStringArrayExtra("releaseDate");
 
         try {
@@ -58,6 +63,12 @@ public class DisplayResults extends Activity {
             e.printStackTrace();
         }
 
+        sortByDate();
+
+        storeBackIntoString();
+    }
+
+    private void sortByDate() {
         Collections.sort(movies, new Comparator<Movies>() {
             public int compare(Movies o1, Movies o2) {
                 if (o1.getDate() == "" || o2.getDate() == "" || o1.getDate() == null || o2.getDate() == null) {
@@ -66,9 +77,6 @@ public class DisplayResults extends Activity {
                 return o2.getDate().compareTo(o1.getDate());
             }
         });
-
-        storeBackIntoString();
-
     }
 
     private void storeBackIntoString() {
@@ -107,7 +115,6 @@ public class DisplayResults extends Activity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
             View row = inflater.inflate(R.layout.single_row, parent, false);
             ImageView myImage = (ImageView) row.findViewById(R.id.imageView);
             TextView movieTitles = (TextView) row.findViewById(R.id.textView3);
@@ -116,6 +123,11 @@ public class DisplayResults extends Activity {
             movieTitles.setText(moviesInfo[position]);
             myDescription.setText(description[position]);
 
+            setImage(position, myImage);
+            return row;
+        }
+
+        private void setImage(int position, ImageView myImage) {
             if (image.length > position && (!image[position].equals("") || !(image[position] == null))) {
 
                 String url = null;
@@ -127,7 +139,6 @@ public class DisplayResults extends Activity {
 
                 Picasso.with(context).load(url).resize(50, 50).centerCrop().into(myImage);
             }
-            return row;
         }
     }
     @Override

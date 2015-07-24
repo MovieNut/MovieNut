@@ -33,6 +33,7 @@ import info.movito.themoviedbapi.model.MovieDb;
 public class AddWatchedMovies extends Activity {
 
     public List<MovieDb> list;
+    EditText movieOut;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +74,7 @@ public class AddWatchedMovies extends Activity {
     }
 
     public void buttonOnClick1(View v) throws IOException {
-        EditText movieOut = (EditText) findViewById(R.id.txtAdd);
+         movieOut = (EditText) findViewById(R.id.txtAdd);
 
         String searchKeyword = movieOut.getText().toString();
 
@@ -84,7 +85,8 @@ public class AddWatchedMovies extends Activity {
                 runSearchKeyword(searchKeyword);
             }
         } catch (NullPointerException e) {
-            Toast.makeText(this, "No keyword entered!", Toast.LENGTH_LONG).show();
+            movieOut.setError("No Keyword entered!");
+           // Toast.makeText(this, "No keyword entered!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -105,22 +107,26 @@ public class AddWatchedMovies extends Activity {
 
     private void getListOfMovies() {
         try {
-            if (list == null || list.size() <= 0) {
-                throw new NullPointerException();
-            } else {
-                String[] moviesName = new String[list.size()];
-                String[] description = new String[list.size()];
-                getMovieInfo(moviesName, description);
-
-                ListView moviesList = (ListView) findViewById(R.id.listView3);
-                moviesAdapter adapter = new moviesAdapter(this, moviesName, description);
-                moviesList.setAdapter(adapter);
-
-                selectOneMovie(moviesList);
-
-            }
+            vertifyListisNull();
         } catch (NullPointerException e) {
-            Toast.makeText(this, "Movies entered are not found!", Toast.LENGTH_LONG).show();
+            movieOut.setError("Movie entered not found!");
+          //  Toast.makeText(this, "Movies entered not found!", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void vertifyListisNull() throws NullPointerException{
+        if (list == null || list.size() <= 0) {
+            throw new NullPointerException();
+        } else {
+            String[] moviesName = new String[list.size()];
+            String[] description = new String[list.size()];
+            getMovieInfo(moviesName, description);
+
+            ListView moviesList = (ListView) findViewById(R.id.listView3);
+            moviesAdapter adapter = new moviesAdapter(this, moviesName, description);
+            moviesList.setAdapter(adapter);
+            selectOneMovie(moviesList);
+
         }
     }
 
