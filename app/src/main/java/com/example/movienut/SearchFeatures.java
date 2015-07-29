@@ -14,6 +14,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.FacebookSdk;
+
 import java.io.IOException;
 
 /**
@@ -34,10 +36,7 @@ public class SearchFeatures extends Activity implements AdapterView.OnItemSelect
         spinner1.setOnItemSelectedListener(this);
     }
 
-    public void buttonOnClickFbLogin(View v) throws IOException {
-        Intent intent = new  Intent(this, LoginActivity.class);
-        startActivity(intent);
-    }
+
 
     public void buttonOnClick(View v) throws IOException {
         movieOut = (EditText) findViewById(R.id.editText);

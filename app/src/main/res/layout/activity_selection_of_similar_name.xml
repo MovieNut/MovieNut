@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context="weilin.myapplication.RecommendMoviesByCompany"
     android:weightSum="1"
-    android:onClick="setListFooter">
+    android:onClick="setListFooter"
+    >
 
     <ListView
         android:layout_width="match_parent"
