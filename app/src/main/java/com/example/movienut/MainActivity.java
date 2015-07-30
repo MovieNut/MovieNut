@@ -33,18 +33,14 @@ public class MainActivity extends Activity {
     private FacebookCallback<LoginResult> mCallback = new FacebookCallback<LoginResult>() {
         @Override
         public void onSuccess(LoginResult loginResult) {
-            AccessToken accessToken = loginResult.getAccessToken();
-            Profile profile = Profile.getCurrentProfile();
-            displayWelcomeMsg(profile);
-            displayHome(profile);
-
+            Log.d("Success: ", "Displaying Home");
+            goHome();
         }
 
         @Override
         public void onCancel() {
             mTextDetails.setText("Login canceled.");
             Log.d("Cancel: ", "Login was canceled by user");
-
         }
 
         @Override
@@ -53,14 +49,8 @@ public class MainActivity extends Activity {
             Log.d("Error: ", "Error logging into facebook " + e);
         }
 
-    };
 
-    //moves to displayHome
-    private void displayHome(Profile profile) {
-        Intent i = new Intent(this, Home.class);
-        i.putExtra("name", profile.getName());
-        startActivity(i);
-    }
+    };
 
     private void displayWelcomeMsg(Profile profile) {
         if (profile != null) {
@@ -78,12 +68,16 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this);
         if (isLoggedIn()) {
-            Intent intent = new Intent(this, Home.class);
-            startActivity(intent);
+            goHome();
         }
         setContentView(R.layout.activity_main);
         initLogin();
+    }
 
+    //go to home
+    private void goHome() {
+        Intent i = new Intent(this, Home.class);
+        startActivity(i);
     }
 
     private void initLogin() {
@@ -100,7 +94,7 @@ public class MainActivity extends Activity {
         accessTokenTracker = new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken oldToken, AccessToken newToken) {
-
+                mTextDetails.setText("");
             }
         };
         accessTokenTracker.startTracking();
