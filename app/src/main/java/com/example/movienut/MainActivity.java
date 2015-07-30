@@ -26,7 +26,6 @@ import java.io.IOException;
 
 public class MainActivity extends Activity {
     private TextView mTextDetails;
-    private ImageView profilePic;
     private CallbackManager mCallbackManager;
     private AccessTokenTracker accessTokenTracker;
     private ProfileTracker profileTracker;
@@ -37,6 +36,7 @@ public class MainActivity extends Activity {
             AccessToken accessToken = loginResult.getAccessToken();
             Profile profile = Profile.getCurrentProfile();
             displayWelcomeMsg(profile);
+            displayHome(profile);
 
         }
 
@@ -55,9 +55,18 @@ public class MainActivity extends Activity {
 
     };
 
+    //moves to displayHome
+    private void displayHome(Profile profile) {
+        Intent i = new Intent(this, Home.class);
+        i.putExtra("name", profile.getName());
+        startActivity(i);
+    }
+
     private void displayWelcomeMsg(Profile profile) {
         if (profile != null) {
             mTextDetails.setText("Welcome " + profile.getName());
+        } else {
+            mTextDetails.setText("");
         }
     }
 
@@ -68,36 +77,61 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this);
+        if (isLoggedIn()) {
+            Intent intent = new Intent(this, Home.class);
+            startActivity(intent);
+        }
         setContentView(R.layout.activity_main);
+        initLogin();
+
+    }
+
+    private void initLogin() {
         mCallbackManager = CallbackManager.Factory.create();
         mTextDetails = (TextView) findViewById(R.id.mTextDetails);
-        profilePic=(ImageView) findViewById(R.id.profile_pic);
-        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions("public_profile");
-        loginButton.registerCallback(mCallbackManager, mCallback);
+        initLoginButton();
+        initAccessTokens();
+        initProfileTracker();
 
-         accessTokenTracker = new AccessTokenTracker() {
+
+    }
+
+    private void initAccessTokens() {
+        accessTokenTracker = new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken oldToken, AccessToken newToken) {
 
             }
         };
+        accessTokenTracker.startTracking();
+    }
 
-         profileTracker = new ProfileTracker() {
+    private void initProfileTracker() {
+        profileTracker = new ProfileTracker() {
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile newProfile) {
 
             }
         };
 
-        accessTokenTracker.startTracking();
         profileTracker.startTracking();
-            }
+    }
+
+    private void initLoginButton() {
+        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton.setReadPermissions("public_profile");
+        loginButton.registerCallback(mCallbackManager, mCallback);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public boolean isLoggedIn() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        return accessToken != null;
     }
 
     @Override
@@ -125,7 +159,9 @@ public class MainActivity extends Activity {
         accessTokenTracker.startTracking();
         profileTracker.startTracking();
 
+
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

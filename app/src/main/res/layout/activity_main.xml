@@ -14,70 +14,63 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#ffeac3ff"
-        android:textSize="20dp"
-        android:layout_alignTop="@+id/profile_pic"
-        android:layout_alignStart="@+id/denyFbLogin" />
+        android:textSize="28dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/denyFbLogin"
-        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="37dp"
-        android:textSize="20dp" />
+        android:textSize="18dp"
+        android:layout_marginTop="54dp"
+        android:layout_below="@+id/mTextDetails"
+        android:layout_centerHorizontal="true" />
 
-    <ImageView
-        android:id="@+id/profile_pic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"/>
 
     <Button
         android:id="@+id/denyFbLogin"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="34dp"
-        android:onClick="buttonToGoHome"
-        android:text="Continue without connecting to facebook"
-        android:textSize="15dp"
-        android:textStyle="bold"
         android:background="#ffb50057"
+        android:onClick="buttonToGoHome"
+        android:text="Continue to app"
         android:textColor="#ffeac3ff"
-        android:layout_alignParentBottom="true"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        android:layout_marginTop="46dp"
+        android:layout_below="@+id/login_button"
         android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/appTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="42dp"
         android:text="MovieNut"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="40dp"
         android:textColor="#ffffffff"
+        android:textSize="50dp"
         android:typeface="monospace"
-        android:layout_below="@+id/mTextDetails"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        />
+        android:layout_marginTop="33dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go Nuts!"
-        android:textStyle="bold"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textSize="25dp"
-        android:typeface="monospace"
-        android:textColor="#ffeac3ff"
-        android:singleLine="false"
         android:layout_below="@+id/appTitle"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:singleLine="false"
+        android:text="Go Nuts!"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#ffeac3ff"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:typeface="monospace" />
 
 
 </RelativeLayout>
