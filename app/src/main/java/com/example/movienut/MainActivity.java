@@ -2,6 +2,7 @@ package com.example.movienut;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,10 +19,13 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
+import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
 import java.io.IOException;
+
+import bolts.AppLinks;
 
 
 public class MainActivity extends Activity {
@@ -67,6 +71,12 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this);
+        Uri targetUrl = AppLinks.getTargetUrlFromInboundIntent(this, getIntent());
+        if (targetUrl != null) {
+            Log.d("AppLink", "App Link Target URL: " + targetUrl.toString());
+        }
+
+
         if (isLoggedIn()) {
             goHome();
         }
@@ -143,8 +153,17 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        AppEventsLogger.activateApp(this);
         Profile profile = Profile.getCurrentProfile();
         displayWelcomeMsg(profile);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Logs 'app deactivate' App Event.
+        AppEventsLogger.deactivateApp(this);
     }
 
     @Override

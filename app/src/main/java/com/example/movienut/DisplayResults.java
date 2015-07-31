@@ -3,7 +3,9 @@ package com.example.movienut;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +17,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.ShareOpenGraphAction;
+import com.facebook.share.model.ShareOpenGraphContent;
+import com.facebook.share.model.ShareOpenGraphObject;
+import com.facebook.share.widget.ShareDialog;
 import com.squareup.picasso.Picasso;
 
 import java.net.MalformedURLException;
@@ -23,6 +32,10 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedList;
+
+import bolts.AppLinks;
+
 /**
  * Created by WeiLin on 4/7/15.
  */
@@ -32,12 +45,18 @@ public class DisplayResults extends Activity {
     public String[] image;
     public String[] releaseDates;
     ArrayList<Movies> movies = new ArrayList<>();
+    private CallbackManager callbackManager;
+    private ShareDialog shareDialog;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_display_results);
+
+        callbackManager = CallbackManager.Factory.create();
+        shareDialog = new ShareDialog(this);
 
         Toast.makeText(getApplicationContext(), "LOADING", Toast.LENGTH_SHORT).show();
         getMoviesInfo();
@@ -141,6 +160,36 @@ public class DisplayResults extends Activity {
             }
         }
     }
+
+    public void shareContent(View view) {
+
+//        LinkedList<String> newMovies = new LinkedList<String>();
+//
+//        for (int i = 0; i < movies.size(); i++) {
+//            newMovies.add(movies.get(i).getMovieTitle());
+//            Log.d("Movies List", "why: " + movies.get(i).getMovieTitle());
+//        }
+
+        ShareOpenGraphObject object = new ShareOpenGraphObject.Builder()
+                .putString("og:type", "video.movie")
+                .putString("og:title", movies.get(1).getMovieTitle())
+                .putString("og:image",movies.get(1).getImageURL())
+                .putString("og:description",movies.get(1).getDescription())
+                .build();
+        ShareOpenGraphAction action = new ShareOpenGraphAction.Builder()
+                .setActionType("video.wants_to_watch")
+                .putObject("movie", object)
+                .build();
+        // Create the content
+        ShareOpenGraphContent content = new ShareOpenGraphContent.Builder()
+                .setPreviewPropertyName("movie")
+                .setAction(action)
+                .build();
+
+        shareDialog.show(content);
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

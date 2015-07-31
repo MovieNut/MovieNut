@@ -13,20 +13,20 @@
         android:id="@+id/mTextDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#ffeac3ff"
-        android:textSize="28dp"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:textColor="#ffeac3ff"
+        android:textSize="28dp" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:textSize="18dp"
-        android:layout_marginTop="54dp"
         android:layout_below="@+id/mTextDetails"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="54dp"
+        android:textSize="18dp" />
 
 
     <Button
@@ -34,28 +34,28 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/login_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="46dp"
         android:background="#ffb50057"
         android:onClick="buttonToGoHome"
         android:text="Continue to app"
         android:textColor="#ffeac3ff"
         android:textSize="12dp"
-        android:textStyle="bold"
-        android:layout_marginTop="46dp"
-        android:layout_below="@+id/login_button"
-        android:layout_centerHorizontal="true" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/appTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp"
         android:text="MovieNut"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#ffffffff"
         android:textSize="50dp"
-        android:typeface="monospace"
-        android:layout_marginTop="33dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:typeface="monospace" />
 
     <TextView
         android:id="@+id/subtitle"

@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="weilin.myapplication.DisplayResults"
+    tools:context="com.example.movienut.DisplayResults"
     android:weightSum="1"
     >
 
@@ -14,4 +14,15 @@
         android:id="@+id/listView"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.84" />
+
+    <com.facebook.share.widget.ShareButton
+        android:id="@+id/shareButton"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_gravity="center_horizontal"
+        android:onClick="shareContent"
+        android:layout_weight="0.22"
+        android:textSize="15dp" />
+
 </LinearLayout>
