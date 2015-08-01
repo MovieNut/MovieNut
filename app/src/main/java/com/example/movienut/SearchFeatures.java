@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,6 +15,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.FacebookSdk;
+
 import java.io.IOException;
 
 /**
@@ -22,11 +25,19 @@ import java.io.IOException;
 public class SearchFeatures extends Activity implements AdapterView.OnItemSelectedListener {
     private EditText movieOut;
     private String selectedType;
+    private TextView displayName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_features);
+
+        //Displaying of facebook username - under development
+//        Intent intent = getIntent();
+//        String name = intent.getStringExtra("name");
+//        displayName = (TextView)findViewById(R.id.displayName);
+//        displayName.setText("name");
+//        Log.d("success", "name:" + name);
 
         Spinner spinner1 = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.recommendationType, android.R.layout.simple_spinner_dropdown_item);
@@ -34,10 +45,7 @@ public class SearchFeatures extends Activity implements AdapterView.OnItemSelect
         spinner1.setOnItemSelectedListener(this);
     }
 
-    public void buttonOnClickFbLogin(View v) throws IOException {
-        Intent intent = new  Intent(this, LoginActivity.class);
-        startActivity(intent);
-    }
+
 
     public void buttonOnClick(View v) throws IOException {
         movieOut = (EditText) findViewById(R.id.editText);

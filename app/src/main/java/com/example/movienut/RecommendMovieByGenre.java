@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
@@ -15,6 +16,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookSdk;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 
 import java.io.IOException;
 import java.util.List;
@@ -38,6 +46,7 @@ public class RecommendMovieByGenre extends Activity {
     public String[] moviesInfo;
     public String[] listOfImage;
     public String[] releaseDates;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,6 +213,7 @@ public class RecommendMovieByGenre extends Activity {
         }
         return releaseDate;
     }
+
 
     class moviesAdapter extends ArrayAdapter<String> {
         Context context;
