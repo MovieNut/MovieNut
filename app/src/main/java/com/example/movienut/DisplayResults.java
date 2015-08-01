@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -26,15 +27,22 @@ import com.facebook.share.model.ShareOpenGraphObject;
 import com.facebook.share.widget.ShareDialog;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+<<<<<<< HEAD
+import java.util.List;
+
+import info.movito.themoviedbapi.model.MovieDb;
+=======
 import java.util.LinkedList;
 
 import bolts.AppLinks;
+>>>>>>> 8c4b83a721518a8820da362c84aca3ed702948f6
 
 /**
  * Created by WeiLin on 4/7/15.
@@ -64,6 +72,34 @@ public class DisplayResults extends Activity {
         ListView list = (ListView) findViewById(R.id.listView);
         moviesAdapter adapter = new moviesAdapter(this, moviesInfo, description, image);
         list.setAdapter(adapter);
+
+        selectOneMovie(list);
+    }
+
+    private void selectOneMovie(ListView peopleNameList) {
+        peopleNameList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                String[] oneMovie = new String[1];
+                String[] oneDescription = new String[1];
+                String[] oneImage = new String[1];
+                String[] oneReleaseDate = new String[1];
+
+                oneMovie[0] = moviesInfo[position];
+                oneDescription[0] = description[position];
+                oneImage[0] = image[position];
+                oneReleaseDate[0] = releaseDates[position];
+
+                Intent displyResults = new Intent(DisplayResults.this, DisplayResults.class);
+                displyResults.putExtra("movieInfo", oneMovie);
+                displyResults.putExtra("description", oneDescription);
+                displyResults.putExtra("image", oneImage);
+                displyResults.putExtra("releaseDate", oneReleaseDate);
+                startActivity(displyResults);
+
+            }
+        });
     }
 
     private void getMoviesInfo() {
