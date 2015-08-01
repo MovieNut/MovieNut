@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,15 +35,12 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-<<<<<<< HEAD
 import java.util.List;
 
 import info.movito.themoviedbapi.model.MovieDb;
-=======
 import java.util.LinkedList;
 
 import bolts.AppLinks;
->>>>>>> 8c4b83a721518a8820da362c84aca3ed702948f6
 
 /**
  * Created by WeiLin on 4/7/15.
@@ -55,6 +53,10 @@ public class DisplayResults extends Activity {
     ArrayList<Movies> movies = new ArrayList<>();
     private CallbackManager callbackManager;
     private ShareDialog shareDialog;
+    private String[] oneMovie;
+    private String[] oneDescription;
+    private String[] oneImage;
+    private String[] oneReleaseDate;
 
 
     @Override
@@ -65,6 +67,7 @@ public class DisplayResults extends Activity {
 
         callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
+
 
         Toast.makeText(getApplicationContext(), "LOADING", Toast.LENGTH_SHORT).show();
         getMoviesInfo();
@@ -81,22 +84,24 @@ public class DisplayResults extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                String[] oneMovie = new String[1];
-                String[] oneDescription = new String[1];
-                String[] oneImage = new String[1];
-                String[] oneReleaseDate = new String[1];
+                oneMovie = new String[1];
+                oneDescription = new String[1];
+                oneImage = new String[1];
+                oneReleaseDate = new String[1];
 
                 oneMovie[0] = moviesInfo[position];
                 oneDescription[0] = description[position];
                 oneImage[0] = image[position];
                 oneReleaseDate[0] = releaseDates[position];
 
-                Intent displyResults = new Intent(DisplayResults.this, DisplayResults.class);
-                displyResults.putExtra("movieInfo", oneMovie);
-                displyResults.putExtra("description", oneDescription);
-                displyResults.putExtra("image", oneImage);
-                displyResults.putExtra("releaseDate", oneReleaseDate);
-                startActivity(displyResults);
+//                Intent displyResults = new Intent(DisplayResults.this, DisplayResults.class);
+//                displyResults.putExtra("movieInfo", oneMovie);
+//                displyResults.putExtra("description", oneDescription);
+//                displyResults.putExtra("image", oneImage);
+//                displyResults.putExtra("releaseDate", oneReleaseDate);
+//                startActivity(displyResults);
+
+                shareContent(view);
 
             }
         });
@@ -198,19 +203,11 @@ public class DisplayResults extends Activity {
     }
 
     public void shareContent(View view) {
-
-//        LinkedList<String> newMovies = new LinkedList<String>();
-//
-//        for (int i = 0; i < movies.size(); i++) {
-//            newMovies.add(movies.get(i).getMovieTitle());
-//            Log.d("Movies List", "why: " + movies.get(i).getMovieTitle());
-//        }
-
         ShareOpenGraphObject object = new ShareOpenGraphObject.Builder()
                 .putString("og:type", "video.movie")
-                .putString("og:title", movies.get(1).getMovieTitle())
-                .putString("og:image",movies.get(1).getImageURL())
-                .putString("og:description",movies.get(1).getDescription())
+                .putString("og:title", oneMovie[0])
+                .putString("og:image",oneImage[0])
+                .putString("og:description",oneDescription[0])
                 .build();
         ShareOpenGraphAction action = new ShareOpenGraphAction.Builder()
                 .setActionType("video.wants_to_watch")
@@ -223,7 +220,6 @@ public class DisplayResults extends Activity {
                 .build();
 
         shareDialog.show(content);
-
     }
 
     @Override
