@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -106,7 +107,9 @@ public class RecommendMoviesByCompany extends Activity {
     }
 
     private void verifyResultNull(List<Collection> result) throws NullPointerException {
+        Log.i(String.valueOf(this), "testing ID detected");
         if (result == null || result.size() <= 0) {
+            Log.w("ResultNull", "id not detected");
             throw new NullPointerException();
         } else {
             Toast.makeText(getApplicationContext(), "LOADING", Toast.LENGTH_SHORT).show();
@@ -149,9 +152,6 @@ public class RecommendMoviesByCompany extends Activity {
 
             return row;
         }
-
-
-
     }
 
     private void returnHomePage() {
