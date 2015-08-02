@@ -43,7 +43,7 @@ public class RecommendMovieByActorTest extends ActivityInstrumentationTestCase2<
         mLaunchIntent.putExtra("searchKeyWord", "john green");
         setActivityIntent(mLaunchIntent);
         RecommendMoviesByActor activity;
-       
+
         activity = getActivity();
         startActivity(activity, mLaunchIntent, null);
         assertEquals(activity.searchKeyWord, "john green");

@@ -58,7 +58,7 @@ public class MainActivity extends Activity {
 
     private void displayWelcomeMsg(Profile profile) {
         if (profile != null) {
-            mTextDetails.setText("Welcome " + profile.getName());
+            mTextDetails.setText("Welcome " + profile.getName() +"!");
         } else {
             mTextDetails.setText("");
         }
@@ -71,12 +71,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(this);
-        Uri targetUrl = AppLinks.getTargetUrlFromInboundIntent(this, getIntent());
-        if (targetUrl != null) {
-            Log.d("AppLink", "App Link Target URL: " + targetUrl.toString());
-        }
-
-
         if (isLoggedIn()) {
             goHome();
         }

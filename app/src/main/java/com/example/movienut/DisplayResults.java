@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,8 +27,14 @@ import com.facebook.share.model.ShareOpenGraphAction;
 import com.facebook.share.model.ShareOpenGraphContent;
 import com.facebook.share.model.ShareOpenGraphObject;
 import com.facebook.share.widget.ShareDialog;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.squareup.picasso.Picasso;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -34,8 +42,17 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+<<<<<<< HEAD
 
 
+=======
+import java.util.List;
+
+import info.movito.themoviedbapi.model.MovieDb;
+import java.util.LinkedList;
+
+import bolts.AppLinks;
+>>>>>>> 0ee7b99c737e5dad423387b1e52feddbc89eceae
 
 /**
  * Created by WeiLin on 4/7/15.
@@ -48,6 +65,10 @@ public class DisplayResults extends Activity {
     ArrayList<Movies> movies = new ArrayList<>();
     private CallbackManager callbackManager;
     private ShareDialog shareDialog;
+    private String[] oneMovie;
+    private String[] oneDescription;
+    private String[] oneImage;
+    private String[] oneReleaseDate;
 
 
     @Override
@@ -58,6 +79,7 @@ public class DisplayResults extends Activity {
 
         callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
+
 
         Toast.makeText(getApplicationContext(), "LOADING", Toast.LENGTH_SHORT).show();
         getMoviesInfo();
@@ -74,22 +96,24 @@ public class DisplayResults extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                String[] oneMovie = new String[1];
-                String[] oneDescription = new String[1];
-                String[] oneImage = new String[1];
-                String[] oneReleaseDate = new String[1];
+                oneMovie = new String[1];
+                oneDescription = new String[1];
+                oneImage = new String[1];
+                oneReleaseDate = new String[1];
 
                 oneMovie[0] = moviesInfo[position];
                 oneDescription[0] = description[position];
                 oneImage[0] = image[position];
                 oneReleaseDate[0] = releaseDates[position];
 
-                Intent displyResults = new Intent(DisplayResults.this, DisplayResults.class);
-                displyResults.putExtra("movieInfo", oneMovie);
-                displyResults.putExtra("description", oneDescription);
-                displyResults.putExtra("image", oneImage);
-                displyResults.putExtra("releaseDate", oneReleaseDate);
-                startActivity(displyResults);
+//                Intent displyResults = new Intent(DisplayResults.this, DisplayResults.class);
+//                displyResults.putExtra("movieInfo", oneMovie);
+//                displyResults.putExtra("description", oneDescription);
+//                displyResults.putExtra("image", oneImage);
+//                displyResults.putExtra("releaseDate", oneReleaseDate);
+//                startActivity(displyResults);
+
+                shareContent(view);
 
             }
         });
@@ -172,7 +196,8 @@ public class DisplayResults extends Activity {
             myDescription.setText(description[position]);
 
             setImage(position, myImage);
-            return row;
+            return
+         row;
         }
 
         private void setImage(int position, ImageView myImage) {
@@ -191,19 +216,11 @@ public class DisplayResults extends Activity {
     }
 
     public void shareContent(View view) {
-
-//        LinkedList<String> newMovies = new LinkedList<String>();
-//
-//        for (int i = 0; i < movies.size(); i++) {
-//            newMovies.add(movies.get(i).getMovieTitle());
-//            Log.d("Movies List", "why: " + movies.get(i).getMovieTitle());
-//        }
-
         ShareOpenGraphObject object = new ShareOpenGraphObject.Builder()
                 .putString("og:type", "video.movie")
-                .putString("og:title", movies.get(1).getMovieTitle())
-                .putString("og:image",movies.get(1).getImageURL())
-                .putString("og:description",movies.get(1).getDescription())
+                .putString("og:title", oneMovie[0])
+                .putString("og:image",oneImage[0])
+                .putString("og:description",oneDescription[0])
                 .build();
         ShareOpenGraphAction action = new ShareOpenGraphAction.Builder()
                 .setActionType("video.wants_to_watch")
@@ -216,7 +233,6 @@ public class DisplayResults extends Activity {
                 .build();
 
         shareDialog.show(content);
-
     }
 
     @Override
@@ -240,6 +256,29 @@ public class DisplayResults extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+//    public void downloadListAsPDF(View view) {
+//        Document doc = new Document();
+//        String outpath = Environment.getExternalStorageDirectory() + "/MovieRecommendations.pdf";
+//        LinkedList<String> movieList = new LinkedList<String>();
+//
+//        for(int i=0;i < movieList.size(); i++){
+//            String moviesToSave = movies.get(i).getMovieTitle();
+//           movieList.add(moviesToSave);
+//        }
+//
+//        try {
+//            PdfWriter.getInstance(doc, new FileOutputStream(outpath));
+//            doc.open();
+//            doc.add(new Paragraph(movieList.toString()));
+//            doc.close();
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (DocumentException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
 
 

@@ -4,8 +4,13 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+<<<<<<< HEAD
     tools:context="com.example.movienut.SearchFeatures"
    >
+=======
+    android:background="#ffd5d5d5"
+    tools:context="com.example.movienut.SearchFeatures">
+>>>>>>> 0ee7b99c737e5dad423387b1e52feddbc89eceae
 
     <Button
         android:layout_width="wrap_content"
@@ -16,7 +21,8 @@
         android:visibility="invisible"
         android:layout_below="@+id/spinner"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        />
 
     <Spinner
         android:entries="@array/recommendationType"
@@ -25,12 +31,19 @@
         android:theme="@android:style/Theme.Holo.Light"
         android:id="@+id/spinner"
         android:spinnerMode="dialog"
+<<<<<<< HEAD
         android:layout_marginTop="72dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
 
 
+=======
+        android:layout_below="@+id/displayName"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp"
+        />
+>>>>>>> 0ee7b99c737e5dad423387b1e52feddbc89eceae
 
     <EditText
         android:layout_width="wrap_content"
@@ -42,7 +55,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/button"
-        android:layout_toStartOf="@+id/button" />
+        android:layout_toStartOf="@+id/button"/>
 
 
 </RelativeLayout>
