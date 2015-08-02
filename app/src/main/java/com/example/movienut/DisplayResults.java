@@ -42,17 +42,13 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-<<<<<<< HEAD
-
-
-=======
 import java.util.List;
 
 import info.movito.themoviedbapi.model.MovieDb;
 import java.util.LinkedList;
 
 import bolts.AppLinks;
->>>>>>> 0ee7b99c737e5dad423387b1e52feddbc89eceae
+
 
 /**
  * Created by WeiLin on 4/7/15.
