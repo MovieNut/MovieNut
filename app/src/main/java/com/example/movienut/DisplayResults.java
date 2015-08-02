@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,8 +27,14 @@ import com.facebook.share.model.ShareOpenGraphAction;
 import com.facebook.share.model.ShareOpenGraphContent;
 import com.facebook.share.model.ShareOpenGraphObject;
 import com.facebook.share.widget.ShareDialog;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.squareup.picasso.Picasso;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -184,7 +191,8 @@ public class DisplayResults extends Activity {
             myDescription.setText(description[position]);
 
             setImage(position, myImage);
-            return row;
+            return
+         row;
         }
 
         private void setImage(int position, ImageView myImage) {
@@ -243,6 +251,29 @@ public class DisplayResults extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+//    public void downloadListAsPDF(View view) {
+//        Document doc = new Document();
+//        String outpath = Environment.getExternalStorageDirectory() + "/MovieRecommendations.pdf";
+//        LinkedList<String> movieList = new LinkedList<String>();
+//
+//        for(int i=0;i < movieList.size(); i++){
+//            String moviesToSave = movies.get(i).getMovieTitle();
+//           movieList.add(moviesToSave);
+//        }
+//
+//        try {
+//            PdfWriter.getInstance(doc, new FileOutputStream(outpath));
+//            doc.open();
+//            doc.add(new Paragraph(movieList.toString()));
+//            doc.close();
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (DocumentException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }
 
 
