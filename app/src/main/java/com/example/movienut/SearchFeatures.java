@@ -82,9 +82,6 @@ public class SearchFeatures extends Activity implements AdapterView.OnItemSelect
         } else if (selectedType.contains("Similar Movies")) {
             intent = new Intent(this, RecommendSimilarMovie.class);
 
-        } else if (selectedType.contains("4. Collections")) {
-            intent = new Intent(this, RecommendMoviesInCollection.class);
-
         } else if (selectedType.contains("Companies")) {
             intent = new Intent(this, RecommendMoviesByCompany.class);
         }

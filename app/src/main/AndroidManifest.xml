@@ -5,10 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
-    <!-- Permission to write to external storage -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -39,8 +35,6 @@
         </activity>
         <activity android:name=".RecommendMoviesByActor" >
         </activity>
-        <activity android:name=".RecommendMoviesInCollection" >
-        </activity>
         <activity
             android:name=".RecommendMoviesByCompany"
             android:label="Click one out of the same company" >
@@ -48,6 +42,10 @@
         <activity
             android:name=".DisplayResults"
             android:label="Movie Result" >
+        </activity>
+        <activity
+            android:name=".Home"
+            android:label="@string/title_activity_home" >
         </activity>
 
         <meta-data
@@ -64,11 +62,8 @@
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider1115023171859524"
             android:exported="true" />
+        <uses-library android:name="android.test.runner"/>
 
-        <activity
-            android:name=".Home"
-            android:label="@string/title_activity_home" >
-        </activity>
     </application>
 
 </manifest>

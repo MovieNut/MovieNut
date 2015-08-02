@@ -1,4 +1,4 @@
-package com.example.movienut.tests;
+package com.example.movienut;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
@@ -34,6 +34,7 @@ public class AddWatchedTest extends ActivityInstrumentationTestCase2<AddWatchedM
     RecommendMoviesByDirectorAuthor nextActivity;
     Instrumentation.ActivityMonitor activityMonitor;
    ListView listView;
+    Button goToApp;
 
     public AddWatchedTest() {
         super(com.example.movienut.AddWatchedMovies.class);
@@ -59,6 +60,7 @@ public class AddWatchedTest extends ActivityInstrumentationTestCase2<AddWatchedM
 
     }
 
+    //test the adding of watched movie into storage
     @MediumTest
     public void testNextActivityWasLaunchedWithIntent() {
 
@@ -66,9 +68,11 @@ public class AddWatchedTest extends ActivityInstrumentationTestCase2<AddWatchedM
         Storage.saveMap(new HashMap<String, Boolean>(), mActivity);
         assertNull(Storage.loadMap(getActivity()).get("24021"));
 
+
         mActivity.runOnUiThread(
                 new Runnable() {
                     public void run() {
+
 
                         editText.requestFocus();
                         editText.setText("The Twilight Saga: Eclipse");
