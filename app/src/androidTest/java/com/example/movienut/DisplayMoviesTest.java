@@ -1,4 +1,4 @@
-package com.example.movienut.tests;
+package com.example.movienut;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -23,7 +23,6 @@ public class DisplayMoviesTest extends ActivityInstrumentationTestCase2<DisplayR
     public DisplayMoviesTest(){
         super(DisplayResults.class);
     }
-
 
     //test for the list for selection then test the right item in the listView being display
     @MediumTest
@@ -57,7 +56,7 @@ public class DisplayMoviesTest extends ActivityInstrumentationTestCase2<DisplayR
 
 }
 
-
+/*
     //test if the sorting of date is in descending order
     @MediumTest
     public void testForSortDate() {
@@ -95,6 +94,6 @@ public class DisplayMoviesTest extends ActivityInstrumentationTestCase2<DisplayR
 
 
     }
-
+*/
 
 }

@@ -4,8 +4,13 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+<<<<<<< HEAD
+    android:background="#ffffe778"
+    tools:context=".AddWatchedMovies">
+=======
     tools:context=".AddWatchedMovies"
     android:background="#ffd5d5d5">
+>>>>>>> 0ee7b99c737e5dad423387b1e52feddbc89eceae
 
     <Button
         android:layout_width="wrap_content"

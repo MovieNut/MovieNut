@@ -98,7 +98,7 @@ public class RecommendMoviesByActor extends Activity {
 
 
     private void returnHomePage() {
-        Intent returnHome = new Intent(this, MainActivity.class);
+        Intent returnHome = new Intent(this, Home.class);
         startActivity(returnHome);
         this.finish();
         Toast.makeText(getApplicationContext(), "Actors or Actress could not be found!", Toast.LENGTH_LONG).show();

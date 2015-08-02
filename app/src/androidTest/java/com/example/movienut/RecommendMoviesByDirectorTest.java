@@ -1,4 +1,4 @@
-package com.example.movienut.tests;
+package com.example.movienut;
 
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;

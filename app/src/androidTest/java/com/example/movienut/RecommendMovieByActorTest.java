@@ -1,4 +1,4 @@
-package com.example.movienut.tests;
+package com.example.movienut;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,8 +19,6 @@ public class RecommendMovieByActorTest extends ActivityInstrumentationTestCase2<
     public RecommendMovieByActorTest(){
         super(RecommendMoviesByActor.class);
     }
-
-
 
     @MediumTest
     public void testForRightActors() {
@@ -45,6 +43,7 @@ public class RecommendMovieByActorTest extends ActivityInstrumentationTestCase2<
         mLaunchIntent.putExtra("searchKeyWord", "john green");
         setActivityIntent(mLaunchIntent);
         RecommendMoviesByActor activity;
+
         activity = getActivity();
         startActivity(activity, mLaunchIntent, null);
         assertEquals(activity.searchKeyWord, "john green");
