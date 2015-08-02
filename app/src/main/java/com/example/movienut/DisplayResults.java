@@ -216,6 +216,7 @@ public class DisplayResults extends Activity {
                 .putString("og:title", oneMovie[0])
                 .putString("og:image",oneImage[0])
                 .putString("og:description",oneDescription[0])
+                .putString("og:url","https://bnc.lt/m/QKsqkGdrFl")
                 .build();
         ShareOpenGraphAction action = new ShareOpenGraphAction.Builder()
                 .setActionType("video.wants_to_watch")
