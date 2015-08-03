@@ -56,7 +56,6 @@ public class DisplayMoviesTest extends ActivityInstrumentationTestCase2<DisplayR
 
 }
 
-/*
     //test if the sorting of date is in descending order
     @MediumTest
     public void testForSortDate() {
@@ -94,6 +93,6 @@ public class DisplayMoviesTest extends ActivityInstrumentationTestCase2<DisplayR
 
 
     }
-*/
+
 
 }

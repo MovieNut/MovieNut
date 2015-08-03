@@ -24,7 +24,7 @@ public class Home extends TabActivity {
         // TabHost tabHost = (TabHost)findViewById(android.);
 
         tabHost.addTab(tabHost.newTabSpec("first").setIndicator("Search").setContent(new Intent(this, SearchFeatures.class)));
-        tabHost.addTab(tabHost.newTabSpec("second").setIndicator("Add Watched Movies").setContent(new Intent(this, AddWatchedMovies.class)));
+        tabHost.addTab(tabHost.newTabSpec("second").setIndicator("Modify Watched Movies").setContent(new Intent(this, AddWatchedMovies.class)));
         // tabHost.setCurrentTab(0);
 
     }
