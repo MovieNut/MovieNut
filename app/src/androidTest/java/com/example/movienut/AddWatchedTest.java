@@ -64,8 +64,8 @@ public class AddWatchedTest extends ActivityInstrumentationTestCase2<AddWatchedM
     @MediumTest
     public void testNextActivityWasLaunchedWithIntent() {
 
-        Map<String, Boolean> map = Storage.loadMap(mActivity);
-        Storage.saveMap(new HashMap<String, Boolean>(), mActivity);
+        Map<String, Movies> map = Storage.loadMap(mActivity);
+        Storage.saveMap(new HashMap<String, Movies>(), mActivity);
         assertNull(Storage.loadMap(getActivity()).get("24021"));
 
 
@@ -94,7 +94,7 @@ public class AddWatchedTest extends ActivityInstrumentationTestCase2<AddWatchedM
 
         assertEquals("The Twilight Saga: Eclipse", editText.getText().toString());
 
-        Map<String, Boolean> testMap = Storage.loadMap(mActivity);
+        Map<String, Movies> testMap = Storage.loadMap(mActivity);
         assertNotNull(testMap.get("24021"));
 
         Storage.saveMap(map, getActivity());

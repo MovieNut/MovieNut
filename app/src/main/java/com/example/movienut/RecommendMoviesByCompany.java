@@ -130,7 +130,7 @@ public class RecommendMoviesByCompany extends Activity {
         private int[] colors = new int[] { Color.parseColor("#fffff1d6"), Color.parseColor("#D2E4FC") };
 
         moviesAdapter(Context c, String[] list) {
-            super(c, R.layout.selection_row, R.id.textView,list);
+            super(c, R.layout.genre_list, R.id.textView,list);
             this.context = c;
             this.list = list;
         }
@@ -139,23 +139,23 @@ public class RecommendMoviesByCompany extends Activity {
         public View getView(int position, View convertView, ViewGroup parent){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            View row = inflater.inflate(R.layout.selection_row, parent, false);
-            TextView name = (TextView) row.findViewById(R.id.textView);
-            TextView space = (TextView) row.findViewById(R.id.textView2);
+            View row = inflater.inflate(R.layout.genre_list, parent, false);
+            TextView name = (TextView) row.findViewById(R.id.genreType);
+          //  TextView space = (TextView) row.findViewById(R.id.textView2);
 
             int colorPos = position % colors.length;
             row.setBackgroundColor(colors[colorPos]);
 
             name.setText(list[position]);
-            space.setVisibility(View.VISIBLE);
-            space.setText("");
+          //  space.setVisibility(View.VISIBLE);
+           // space.setText("");
 
             return row;
         }
     }
 
     private void returnHomePage() {
-        Intent returnHome = new Intent(this, MainActivity.class);
+        Intent returnHome = new Intent(this, Home.class);
         startActivity(returnHome);
         this.finish();
         Toast.makeText(getApplicationContext(), "Movies or peoples could not be found!", Toast.LENGTH_LONG).show();
@@ -174,26 +174,31 @@ public class RecommendMoviesByCompany extends Activity {
         releaseDates[0] = "";
         Map<String, Boolean> map = Storage.loadMap(getApplicationContext());
 
-        for (int i = 0; i < result.size(); i++) {
-            addMovieInfo(accountApi, result, map, i);
-        }
+        //map.put("24021", new Movies());
+        Storage.saveMap(map, getApplicationContext());
+        addMovieInfo(accountApi, result, map);
+
         moviesInfo = displayMovies.split("\\r?\\n");
         listOfDescription = description.split("\\r?\\n");
         listOfImage = image.split("\\r?\\n");
     }
 
-    private void addMovieInfo(TmdbApi accountApi, List<Collection> result, Map<String, Boolean> map, int i) {
+    private void addMovieInfo(TmdbApi accountApi, List<Collection> result, Map<String, Boolean> map) {
         String releaseDate;
         MovieDb movie;
-        if (map.get(String.valueOf(result.get(i).getId())) == null) {
-            releaseDate = result.get(i).getReleaseDate();
-            releaseDate = addReleaseDate(i, releaseDate);
+        int count = 0;
+        for (int i = 0; i < result.size(); i++) {
+            if (map.get(String.valueOf(result.get(i).getId())) == null) {
+                releaseDate = result.get(i).getReleaseDate();
+                releaseDate = addReleaseDate(count, releaseDate);
 
-            displayMovies = displayMovies + result.get(i).getName() + "(" + releaseDate + ")" + "\n";
-            movie = accountApi.getMovies().getMovie(result.get(i).getId(), "");
+                displayMovies = displayMovies + result.get(i).getName() + "(" + releaseDate + ")" + "\n";
+                movie = accountApi.getMovies().getMovie(result.get(i).getId(), "");
 
-            addDescription(movie);
-            addImage(accountApi, result, i);
+                addDescription(movie);
+                addImage(accountApi, result, i);
+                count++;
+            }
         }
     }
 

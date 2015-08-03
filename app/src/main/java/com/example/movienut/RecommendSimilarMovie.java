@@ -171,7 +171,7 @@ public class RecommendSimilarMovie extends Activity {
     }
 
     private void returnHomePage() {
-        Intent returnHome = new Intent(this, MainActivity.class);
+        Intent returnHome = new Intent(this, Home.class);
         startActivity(returnHome);
         this.finish();
         Toast.makeText(getApplicationContext(), "Movies could not be found!", Toast.LENGTH_LONG).show();
@@ -192,17 +192,18 @@ public class RecommendSimilarMovie extends Activity {
 
     private String getMoviesInfo(List<MovieDb> result, String image, Map<String, Boolean> map) {
         String releaseDate;
+        int count = 0;
         for (int i = 0; i < result.size(); i++) {
             if (map.get(String.valueOf(result.get(i).getId())) == null) {
                 releaseDate = result.get(i).getReleaseDate();
-                releaseDate = addReleaseDate(releaseDate, i);
+                releaseDate = addReleaseDate(releaseDate, count);
 
                 displayMovies = displayMovies + result.get(i).getOriginalTitle() + "("
                         + releaseDate + ")" + "\n";
 
                 addDescription(result, i);
                 image = addImageUrl(result, image, i);
-
+                count++;
             }
         }
         return image;

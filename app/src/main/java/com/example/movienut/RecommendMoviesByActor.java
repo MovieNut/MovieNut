@@ -120,10 +120,7 @@ public class RecommendMoviesByActor extends Activity {
 
         Map<String, Boolean> map = Storage.loadMap(getApplicationContext());
 
-        for (int i = 0; i < result.size(); i++) {
-
-            getMovieInfo(accountApi, result, map, i);
-        }
+        getMovieInfo(accountApi, result, map);
 
         moviesInfo = displayMovies.split("\\r?\\n");
         listOfDescription = description.split("\\r?\\n");
@@ -131,29 +128,33 @@ public class RecommendMoviesByActor extends Activity {
 
     }
 
-    private void getMovieInfo(TmdbApi accountApi, List<PersonCredit> result, Map<String, Boolean> map, int i) {
+    private void getMovieInfo(TmdbApi accountApi, List<PersonCredit> result, Map<String, Boolean> map) {
         String releaseDate, movieTitle, character;
         MovieDb movie;
-        if (map.get(String.valueOf(result.get(i).getId())) == null) {
-            releaseDate = result.get(i).getReleaseDate();
-            movieTitle = result.get(i).getMovieOriginalTitle();
+        int count = 0;
 
-            character = getCharacter(result, i);
+        for (int i = 0; i < result.size(); i++) {
+            if (map.get(String.valueOf(result.get(i).getId())) == null) {
+                releaseDate = result.get(i).getReleaseDate();
+                movieTitle = result.get(i).getMovieOriginalTitle();
+                character = getCharacter(result, i);
+                releaseDate = addReleaseDates(releaseDate, count);
+                addTitleDateTogether(releaseDate, movieTitle, character);
 
-            releaseDate = addReleaseDates(releaseDate, i);
+                assert result.get(i).getId() <= 0 : "null id";
 
-            displayMovies = displayMovies + movieTitle +
-                    "(" + releaseDate + ")" + " act as "
-                    + character + "\n";
-
-            assert result.get(i).getId() <= 0 : "null id";
-
-            movie = accountApi.getMovies().getMovie(result.get(i).getId(), "");
-
-            addDescription(movie);
-
-            getImageUrl(accountApi, result, i);
+                movie = accountApi.getMovies().getMovie(result.get(i).getId(), "");
+                addDescription(movie);
+                getImageUrl(accountApi, result, i);
+                count++;
+            }
         }
+    }
+
+    private void addTitleDateTogether(String releaseDate, String movieTitle, String character) {
+        displayMovies = displayMovies + movieTitle +
+                "(" + releaseDate + ")" + " act as "
+                + character + "\n";
     }
 
     private void getImageUrl(TmdbApi accountApi, List<PersonCredit> result, int i) {

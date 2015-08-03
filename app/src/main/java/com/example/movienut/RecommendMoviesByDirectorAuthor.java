@@ -99,7 +99,7 @@ public class RecommendMoviesByDirectorAuthor extends Activity {
 
 
     private void returnHomePage() {
-        Intent returnHome = new Intent(this, MainActivity.class);
+        Intent returnHome = new Intent(this, Home.class);
         startActivity(returnHome);
         this.finish();
         Toast.makeText(getApplicationContext(), "Director or author could not be found!", Toast.LENGTH_LONG).show();
@@ -118,36 +118,42 @@ public class RecommendMoviesByDirectorAuthor extends Activity {
         releaseDates[0] = "";
         Map<String, Boolean> map = Storage.loadMap(getApplicationContext());
 
-        for (int i = 0; i < result.size(); i++) {
-            addMovieInfo(accountApi, result, map, i);
-        }
+        addMovieInfo(accountApi, result, map);
 
         moviesInfo = displayMovies.split("\\r?\\n");
         listOfDescription = description.split("\\r?\\n");
         listOfImage = image.split("\\r?\\n");
     }
 
-    private void addMovieInfo(TmdbApi accountApi, List<PersonCredit> result, Map<String, Boolean> map, int i) {
+    private void addMovieInfo(TmdbApi accountApi, List<PersonCredit> result, Map<String, Boolean> map) {
         String releaseDate;
         String movieTitle;
+        int count = 0;
         MovieDb movie;
-        if (map.get(String.valueOf(result.get(i).getId())) == null) {
-            releaseDate = result.get(i).getReleaseDate();
-            movieTitle = result.get(i).getMovieOriginalTitle();
 
-            releaseDate = getReleaseDates(releaseDate, i);
+        for (int i = 0; i < result.size(); i++) {
+            if (map.get(String.valueOf(result.get(i).getId())) == null) {
+                releaseDate = result.get(i).getReleaseDate();
+                movieTitle = result.get(i).getMovieOriginalTitle();
+                releaseDate = getReleaseDates(releaseDate, count);
 
-            displayMovies = displayMovies + movieTitle +
-                    "(" + releaseDate + ")" + "Position as " + result.get(i).getJob() + "\n";
+                addInTitleDateTogether(result, releaseDate, movieTitle, i);
 
-            assert result.get(i).getId() <= 0 : "null id";
+                assert result.get(i).getId() <= 0 : "null id";
 
-            movie = accountApi.getMovies().getMovie(result.get(i).getId(), "");
+                movie = accountApi.getMovies().getMovie(result.get(i).getId(), "");
 
-            addDescription(movie);
+                addDescription(movie);
 
-            addImageUrl(accountApi, result, i);
+                addImageUrl(accountApi, result, i);
+                count++;
+            }
         }
+    }
+
+    private void addInTitleDateTogether(List<PersonCredit> result, String releaseDate, String movieTitle, int i) {
+        displayMovies = displayMovies + movieTitle +
+                "(" + releaseDate + ")" + "Position as " + result.get(i).getJob() + "\n";
     }
 
     private void getBiolography(TmdbApi accountApi) {

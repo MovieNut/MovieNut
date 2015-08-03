@@ -28,7 +28,7 @@ public class RecommendMoviesForCompanyTest extends ActivityInstrumentationTestCa
         super(RecommendMoviesByCompany.class);
     }
 
-    //test for the list for selection then test the selection of an item in the listView with the same amount
+    //test for the movieList for selection then test the selection of an item in the listView with the same amount
     //of output
     @MediumTest
     public void testForSimilarMovies() {

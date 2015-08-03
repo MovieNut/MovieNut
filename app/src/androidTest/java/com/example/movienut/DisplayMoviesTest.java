@@ -24,7 +24,7 @@ public class DisplayMoviesTest extends ActivityInstrumentationTestCase2<DisplayR
         super(DisplayResults.class);
     }
 
-    //test for the list for selection then test the right item in the listView being display
+    //test for the movieList for selection then test the right item in the listView being display
     @MediumTest
     public void testForDisplay() {
         Intent mLaunchIntent = new Intent(getInstrumentation()
