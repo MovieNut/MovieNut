@@ -212,24 +212,37 @@ public class DisplayResults extends Activity {
     }
 
     public void shareContent(View view) {
-        ShareOpenGraphObject object = new ShareOpenGraphObject.Builder()
-                .putString("og:type", "video.movie")
-                .putString("og:title", oneMovie[0])
-                .putString("og:image",oneImage[0])
-                .putString("og:description",oneDescription[0])
-                .putString("og:url","https://bnc.lt/m/QKsqkGdrFl")
-                .build();
-        ShareOpenGraphAction action = new ShareOpenGraphAction.Builder()
-                .setActionType("video.wants_to_watch")
-                .putObject("movie", object)
-                .build();
-        // Create the content
-        ShareOpenGraphContent content = new ShareOpenGraphContent.Builder()
-                .setPreviewPropertyName("movie")
-                .setAction(action)
-                .build();
 
-        shareDialog.show(content);
+        //problem with opengraph during 'live' test - facebook policy issue
+//        ShareOpenGraphObject object = new ShareOpenGraphObject.Builder()
+//                .putString("og:type", "video.movie")
+//                .putString("og:title", oneMovie[0])
+//                .putString("og:image",oneImage[0])
+//                .putString("og:description",oneDescription[0])
+//                .putString("og:url","https://bnc.lt/m/QKsqkGdrFl")
+//                .build();
+//        ShareOpenGraphAction action = new ShareOpenGraphAction.Builder()
+//                .setActionType("video.wants_to_watch")
+//                .putObject("movie", object)
+//                .build();
+//        // Create the content
+//        ShareOpenGraphContent content = new ShareOpenGraphContent.Builder()
+//                .setPreviewPropertyName("movie")
+//                .setAction(action)
+//                .build();
+//
+//        shareDialog.show(content);
+
+        if (ShareDialog.canShow(ShareLinkContent.class)) {
+            ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                    .setContentTitle(oneMovie[0])
+                    .setContentDescription(oneDescription[0])
+                    .setImageUrl(Uri.parse(oneImage[0]))
+                    .setContentUrl(Uri.parse("https://bnc.lt/m/QKsqkGdrFl"))
+            .build();
+
+            shareDialog.show(linkContent);
+        }
     }
 
     @Override
