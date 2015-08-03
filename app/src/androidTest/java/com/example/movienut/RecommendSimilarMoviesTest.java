@@ -36,12 +36,12 @@ public class RecommendSimilarMoviesTest extends ActivityInstrumentationTestCase2
         Intent mLaunchIntent = new Intent(getInstrumentation()
                 .getTargetContext(), RecommendSimilarMovie.class);
 
-        mLaunchIntent.putExtra("searchKeyWord", "twilight");
+        mLaunchIntent.putExtra("searchKeyWord", "avengers");
 
         setActivityIntent(mLaunchIntent);
         RecommendSimilarMovie activity = getActivity();
         startActivity(activity, mLaunchIntent, null);
-        assertEquals(activity.searchKeyWord.toLowerCase(), "twilight");
+        assertEquals(activity.searchKeyWord.toLowerCase(), "avengers");
 
         listView = (ListView) activity.findViewById(R.id.listView2);
 
