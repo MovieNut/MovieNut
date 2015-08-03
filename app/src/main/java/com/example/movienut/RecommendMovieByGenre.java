@@ -41,6 +41,7 @@ public class RecommendMovieByGenre extends Activity {
     private List<Genre> genreList;
     String displayMovies;
     public String searchKeyWord;
+    public String image = "" + "\n";
     String description = " " + "\n";
     public  String[] listOfDescription;
     public String[] moviesInfo;
@@ -115,7 +116,6 @@ public class RecommendMovieByGenre extends Activity {
                 displayMovies = genreList.get(position).getName() + " movies" + "\n";
 
                 displayMoviesBasedOnGenre(idOfGenre);
-
             }
 
         });
@@ -149,50 +149,49 @@ public class RecommendMovieByGenre extends Activity {
     }
 
     private void returnHomePage() {
-        Intent returnHome = new Intent(this, MainActivity.class);
+        Intent returnHome = new Intent(this, Home.class);
         startActivity(returnHome);
         this.finish();
         Toast.makeText(getApplicationContext(), "Error encountered!", Toast.LENGTH_LONG).show();
     }
 
     private void getListOfMovies(List<MovieDb> result) throws IOException {
-        String image = " " + "\n";
         releaseDates = new String[result.size() + 1];
         releaseDates[0] = "";
         Map<String, Boolean> map = Storage.loadMap(getApplicationContext());
 
-        for (int i = 0; i < result.size(); i++) {
-            image = addMovieInfo(result, image, map, i);
-        }
+        addMovieInfo(result, map);
         moviesInfo = displayMovies.split("\\r?\\n");
         listOfDescription = description.split("\\r?\\n");
         listOfImage = image.split("\\r?\\n");
     }
 
-    private String addMovieInfo(List<MovieDb> result, String image, Map<String, Boolean> map, int i) {
+    private void addMovieInfo(List<MovieDb> result, Map<String, Boolean> map) {
         String releaseDate;
-        if (map.get(String.valueOf(result.get(i).getId())) == null) {
-            releaseDate = result.get(i).getReleaseDate();
-            releaseDate = addReleaseDate(releaseDate, i);
+        int count = 0;
 
-            displayMovies = displayMovies + result.get(i).getOriginalTitle() + "("
-                    + releaseDate + ")" + "\n";
+        for (int i = 0; i < result.size(); i++) {
+            if (map.get(String.valueOf(result.get(i).getId())) == null) {
+                releaseDate = result.get(i).getReleaseDate();
+                releaseDate = addReleaseDate(releaseDate, count);
 
-            addDescription(result, i);
-            image = addImageUrl(result, image, i);
+                displayMovies = displayMovies + result.get(i).getOriginalTitle() + "("
+                        + releaseDate + ")" + "\n";
 
+                addDescription(result, i);
+                addImageUrl(result, i);
+                count++;
+            }
         }
-        return image;
     }
 
-    private String addImageUrl(List<MovieDb> result, String image, int i) {
+    private void addImageUrl(List<MovieDb> result, int i) {
         if (Utils.createImageUrl(accountApi, result.get(i).getPosterPath(), "original") != null) {
             image = image + Utils.createImageUrl(accountApi, result.get(i).getPosterPath(), "original").toString() + "\n";
 
         } else {
             image = image + " " + "\n";
         }
-        return image;
     }
 
     private void addDescription(List<MovieDb> result, int i) {
@@ -214,7 +213,6 @@ public class RecommendMovieByGenre extends Activity {
         return releaseDate;
     }
 
-
     class moviesAdapter extends ArrayAdapter<String> {
         Context context;
         String[] list;
@@ -229,8 +227,8 @@ public class RecommendMovieByGenre extends Activity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View row = inflater.inflate(R.layout.selection_row, parent, false);
-            TextView name = (TextView) row.findViewById(R.id.textView);
+            View row = inflater.inflate(R.layout.genre_list, parent, false);
+            TextView name = (TextView) row.findViewById(R.id.genreType);
 
             int colorPos = position % colors.length;
             row.setBackgroundColor(colors[colorPos]);

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -14,8 +15,10 @@ import java.util.Map;
  */
 public class Storage {
 
-    public static void saveMap(Map<String,Boolean> inputMap, Context context){
+    public static void saveMap(Map<String, Boolean> inputMap, Context context){
+
         SharedPreferences pSharedPref = context.getSharedPreferences("MyVariables", Context.MODE_PRIVATE);
+       // inputMap.put("24021", new Movies());
         if (pSharedPref != null){
             JSONObject jsonObject = new JSONObject(inputMap);
             String jsonString = jsonObject.toString();
@@ -24,10 +27,12 @@ public class Storage {
             editor.putString("My_map", jsonString);
             editor.commit();
         }
+
     }
 
     public static Map<String,Boolean> loadMap(Context context){
-        Map<String,Boolean> outputMap = new HashMap<String,Boolean>();
+        Map<String,Boolean> outputMap = new HashMap();
+       // outputMap.put("24021", new Movies());
         SharedPreferences pSharedPref = context.getSharedPreferences("MyVariables", Context.MODE_PRIVATE);
         try{
             if (pSharedPref != null){
