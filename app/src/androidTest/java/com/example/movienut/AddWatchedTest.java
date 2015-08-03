@@ -26,15 +26,11 @@ import java.util.Map;
 public class AddWatchedTest extends ActivityInstrumentationTestCase2<AddWatchedMovies> {
 
     private AddWatchedMovies mActivity;
-    private String mSelection;
-    private int mPos;
-    private Spinner mSpinner;
     EditText editText;
     Button launchNextButton;
-    RecommendMoviesByDirectorAuthor nextActivity;
     Instrumentation.ActivityMonitor activityMonitor;
    ListView listView;
-    Button goToApp;
+    Button addButton;
 
     public AddWatchedTest() {
         super(com.example.movienut.AddWatchedMovies.class);
@@ -53,6 +49,7 @@ public class AddWatchedTest extends ActivityInstrumentationTestCase2<AddWatchedM
                 (Button) getActivity()
                         .findViewById(R.id.button);
 
+
         listView = (ListView) getActivity().findViewById(R.id.listView3);
 
 
@@ -60,13 +57,15 @@ public class AddWatchedTest extends ActivityInstrumentationTestCase2<AddWatchedM
 
     }
 
-    //test the adding of watched movie into storage
+    //test watched movie into storage
     @MediumTest
     public void testNextActivityWasLaunchedWithIntent() {
 
-        Map<String, Movies> map = Storage.loadMap(mActivity);
-        Storage.saveMap(new HashMap<String, Movies>(), mActivity);
+        Map<String, Boolean> map = Storage.loadMap(mActivity);
+        Storage.saveMap(new HashMap<String, Boolean>(), mActivity);
         assertNull(Storage.loadMap(getActivity()).get("24021"));
+        map.put("24021", true);
+        Storage.saveMap(map, mActivity);
 
 
         mActivity.runOnUiThread(
@@ -80,11 +79,8 @@ public class AddWatchedTest extends ActivityInstrumentationTestCase2<AddWatchedM
                         launchNextButton.requestFocus();
                         launchNextButton.performClick();
 
-                        listView.performItemClick(
-                                listView.getChildAt(0),
-                                0,
-                                listView.getAdapter().getItemId(0));
-
+                        Button button=(Button) mActivity.findViewById(R.id.showAll);
+                        button.performClick();
                     }
                 }
         );
@@ -94,7 +90,7 @@ public class AddWatchedTest extends ActivityInstrumentationTestCase2<AddWatchedM
 
         assertEquals("The Twilight Saga: Eclipse", editText.getText().toString());
 
-        Map<String, Movies> testMap = Storage.loadMap(mActivity);
+        Map<String, Boolean> testMap = Storage.loadMap(mActivity);
         assertNotNull(testMap.get("24021"));
 
         Storage.saveMap(map, getActivity());

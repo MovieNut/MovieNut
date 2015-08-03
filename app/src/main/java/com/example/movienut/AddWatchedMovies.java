@@ -171,26 +171,6 @@ public class AddWatchedMovies extends Activity {
     //http://api.themoviedb.org/3/search/movie?api_key=3f2950a48b75db414b1dbb148cfcad89&query=avengers
     //  http://api.themoviedb.org/3/movie/8966/similar?api_key=3f2950a48b75db414b1dbb148cfcad89
 
-    /*
-    public void buttonToAdd(View v) {
-        final int position = moviesList.getPositionForView((View) v.getParent());
-        Map<String, Movies> map = Storage.loadMap(getApplicationContext());
-        Movies movie = setMovieInfo(position);
-        map.put("24021", new Movies());
-      //  map.put(String.valueOf(movieList.get(position).getId()), movie);
-        Storage.saveMap(map, getApplicationContext());
-        Toast.makeText(getApplicationContext(), movieList.get(position).getOriginalTitle() + " is added as watched movie!", Toast.LENGTH_LONG).show();
-
-    }
-    public void buttonToRemove(View v) {
-        final int position = moviesList.getPositionForView((View) v.getParent());
-        Map<String, Movies> map = Storage.loadMap(getApplicationContext());
-        map.remove(String.valueOf(movieList.get(position).getId()));
-        Storage.saveMap(map, getApplicationContext());
-        Toast.makeText(getApplicationContext(), movieList.get(position).getOriginalTitle() + " is removed as watched movie!", Toast.LENGTH_LONG).show();
-
-    }
-*/
     public void buttonToShowAll(View v) {
         int count = 1;
         Map<String, Boolean> map = Storage.loadMap(getApplicationContext());
@@ -200,7 +180,7 @@ public class AddWatchedMovies extends Activity {
             Toast.makeText(getApplicationContext(),  "No watched movies!", Toast.LENGTH_LONG).show();
         } else {
             initilizeStringArray(map);
-            
+
             addMovieInfo(count, map);
 
             startAnotherActivity();
