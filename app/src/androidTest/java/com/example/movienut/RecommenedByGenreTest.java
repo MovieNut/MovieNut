@@ -2,6 +2,7 @@ package com.example.movienut;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Looper;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.MediumTest;
 import android.view.KeyEvent;
@@ -23,7 +24,7 @@ public class RecommenedByGenreTest extends ActivityInstrumentationTestCase2<Reco
         super(RecommendMovieByGenre.class);
     }
 
-    /*
+
     @MediumTest
     public void testForUserAccess() {
         Intent mLaunchIntent = new Intent(getInstrumentation()
@@ -42,7 +43,7 @@ public class RecommenedByGenreTest extends ActivityInstrumentationTestCase2<Reco
         int actualCount = listView.getAdapter().getCount();
         assertEquals(expectedCount, actualCount);
 
-        new Handler().post(new Runnable() {
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
                 listView.performItemClick(
@@ -57,8 +58,8 @@ public class RecommenedByGenreTest extends ActivityInstrumentationTestCase2<Reco
         assertEquals(21, activity.moviesInfo.length);
 
     }
-    */
 
+/*
     @MediumTest
     public void testForAdmin() {
         Intent mLaunchIntent = new Intent(getInstrumentation()
@@ -74,8 +75,6 @@ public class RecommenedByGenreTest extends ActivityInstrumentationTestCase2<Reco
         // this.sendKeys(KeyEvent.KEYCODE_DPAD_CENTER);
 
         assertEquals(21, activity.moviesInfo.length);
-
-
     }
-
+*/
 }
